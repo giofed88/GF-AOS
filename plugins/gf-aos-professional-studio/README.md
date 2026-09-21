@@ -1,4 +1,4 @@
-# GF-AOS Professional Studio v0.5.0
+# GF-AOS Professional Studio v0.6.0
 
 Plugin Codex per instradamento professionale, orchestrazione agentica, pianificazione, inventario e Document Intelligence locale, scadenze, brief e verifica. **Nessun server MCP, collegamento Drive, automazione Telegram o scheduler è attivo in questo pacchetto**. Le integrazioni richiedono configurazione separata.
 
@@ -13,6 +13,28 @@ Le skill `agent-orchestrator` e `strategic-context` mantengono lo stesso metodo 
 ambienti che non caricano automaticamente i profili repository-local. Gli agenti restituiscono
 handoff Markdown; il coordinatore conserva il controllo delle scritture e l'utente mantiene
 l'approvazione professionale.
+
+## Lifecycle & Quality Engine
+
+La v0.6 aggiunge un workspace riprendibile senza salvare il transcript. Il motore crea stato
+macchina minimo, registri Markdown, checkpoint versionati, coda con massimo quattro azioni e un
+report qualita con esito `PASS`, `PASS CON RILIEVI` o `BLOCKED`.
+Il gate finale registra anche `APPROVAL_RECEIPT.md` con artefatto, hash, nota e data UTC, senza
+presentarlo come firma digitale, deposito o trasmissione.
+
+```bash
+python3 plugins/gf-aos-professional-studio/scripts/case_lifecycle.py init /path/workspace \
+  --case-id CASE-001 --client "Cliente" --module AUDIT_001 --role "Revisore" --period 2026
+
+python3 plugins/gf-aos-professional-studio/scripts/case_lifecycle.py checkpoint /path/workspace \
+  --summary-file /path/sintesi.md --status "In corso" --next-action "Acquisire il libro inventari"
+
+python3 plugins/gf-aos-professional-studio/scripts/case_lifecycle.py quality /path/workspace
+```
+
+L'hook Codex `SessionStart` e read-only: carica `CASE_MEMORY.md` soltanto quando la variabile
+`GF_AOS_WORKSPACE` indica esplicitamente il workspace. L'attivazione degli hook resta soggetta al
+controllo di fiducia di Codex. Nessun dato cliente viene scritto nella repository del plugin.
 
 ## Installazione da marketplace repository
 
@@ -46,6 +68,8 @@ Dipendenze di estrazione: `pypdf`, `python-docx`, `openpyxl` e `python-pptx`. Il
 | Agent Orchestrator e handoff Markdown | Incluso |
 | Profili multi-agente Codex CLI | Inclusi nella repository |
 | Memoria strategica per caso | Inclusa come template Markdown |
+| Lifecycle, checkpoint e quality report | Incluso |
+| Ripresa SessionStart | Inclusa, opt-in tramite `GF_AOS_WORKSPACE` |
 | Drive e fascicoli remoti | Da collegare |
 | Scadenze programmate | Da collegare |
 | Telegram/TaskNotify | Da collegare e verificare |

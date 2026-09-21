@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.6.0
+- Lifecycle locale per inizializzare, riprendere e versionare fascicoli derivati.
+- Checkpoint e memoria canonica Markdown senza conservare il transcript.
+- Quality Engine con esiti `PASS`, `PASS CON RILIEVI` e `BLOCKED`.
+- Gate deterministico `APPROVO OUTPUT` con nota, artefatto e hash SHA-256.
+- Ricevuta Markdown dell'approvazione, distinta da firma, deposito o trasmissione.
+- Hook Codex `SessionStart` read-only e opt-in tramite `GF_AOS_WORKSPACE`.
+- Comando hook separato per Windows e limite esplicito del contesto restituito.
+- Nuove skill `case-lifecycle` e `professional-evals` con matrice di regressione.
+- Vincolo di massimo quattro prossime azioni e attivazione esplicita di `CRISIS_001`.
+
 ## 0.5.0
 - Agent Core ispirato ai pattern utili di Everything Claude Code e adattato a GF-AOS.
 - Otto ruoli Codex repository-local con profili stretti e sandbox read-only.

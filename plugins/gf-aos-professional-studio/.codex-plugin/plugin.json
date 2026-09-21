@@ -1,16 +1,17 @@
 {
   "name": "gf-aos-professional-studio",
-  "version": "0.5.0",
-  "description": "Workflow GF-AOS con Agent Core, fascicoli e Document Intelligence verificabile.",
+  "version": "0.6.0",
+  "description": "Workflow GF-AOS con Agent Core, lifecycle dei fascicoli e controlli qualita verificabili.",
   "repository": "https://github.com/giofed88/GF-AOS",
   "author": {
     "name": "Giovanni Federico"
   },
   "skills": "./skills/",
+  "hooks": "./hooks/codex-hooks.json",
   "interface": {
     "displayName": "GF-AOS Professional Studio",
     "shortDescription": "Fascicoli e flussi di lavoro dello studio.",
-    "longDescription": "Coordina skill e ruoli agentici, instrada gli incarichi, analizza documenti in sola lettura e prepara output sottoposti a verifica indipendente.",
+    "longDescription": "Coordina skill e ruoli agentici, riprende fascicoli tramite checkpoint Markdown, analizza documenti in sola lettura e applica controlli di qualita prima della validazione professionale.",
     "developerName": "Giovanni Federico",
     "category": "Productivity",
     "capabilities": ["Read", "Write"],
