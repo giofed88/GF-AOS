@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.7.0
+- Professional Workflow Packs distinti per revisione, collegio, fiscale, lavoro, contenzioso e perizie.
+- Un unico skill-router leggero con riferimenti Markdown caricati per la sola famiglia selezionata.
+- Generatore sicuro di `WORKFLOW_PLAN.md`, `OUTPUT_REGISTER.md` e `WORKING_PAPERS_INDEX.md`.
+- Validatore strutturale con esiti `PASS`, `PASS CON RILIEVI` e `BLOCKED`.
+- Sedici moduli professionali coperti senza attivazione implicita di `CRISIS_001` o `ODV_001`.
+- Sei casi eval Markdown con input minimo, esito atteso e fallimenti bloccanti.
+- Rifiuto di sovrascritture e controllo di coerenza con il `lead_module` del fascicolo.
+
 ## 0.6.0
 - Lifecycle locale per inizializzare, riprendere e versionare fascicoli derivati.
 - Checkpoint e memoria canonica Markdown senza conservare il transcript.

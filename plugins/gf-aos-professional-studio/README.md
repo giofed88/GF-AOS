@@ -1,4 +1,4 @@
-# GF-AOS Professional Studio v0.6.0
+# GF-AOS Professional Studio v0.7.0
 
 Plugin Codex per instradamento professionale, orchestrazione agentica, pianificazione, inventario e Document Intelligence locale, scadenze, brief e verifica. **Nessun server MCP, collegamento Drive, automazione Telegram o scheduler è attivo in questo pacchetto**. Le integrazioni richiedono configurazione separata.
 
@@ -36,6 +36,22 @@ L'hook Codex `SessionStart` e read-only: carica `CASE_MEMORY.md` soltanto quando
 `GF_AOS_WORKSPACE` indica esplicitamente il workspace. L'attivazione degli hook resta soggetta al
 controllo di fiducia di Codex. Nessun dato cliente viene scritto nella repository del plugin.
 
+## Professional Workflow Packs
+
+La v0.7 aggiunge piani operativi riutilizzabili e distinti per revisione legale, collegio,
+fiscale, lavoro, contenzioso tributario e perizie. Le istruzioni specialistiche sono riferimenti
+Markdown caricati per famiglia: il contesto non viene occupato dai workflow non pertinenti.
+
+```bash
+python3 plugins/gf-aos-professional-studio/scripts/workflow_packs.py list
+python3 plugins/gf-aos-professional-studio/scripts/workflow_packs.py plan /path/workspace
+python3 plugins/gf-aos-professional-studio/scripts/workflow_packs.py validate /path/workspace
+```
+
+`plan` usa il `lead_module` di `CASE_STATE.json`, crea piano, registro output e indice carte di
+lavoro e rifiuta di sovrascrivere file esistenti. `validate` applica l'eval specifico del modulo.
+I pack non includono `CRISIS_001` o `ODV_001` e non li attivano per analogia.
+
 ## Installazione da marketplace repository
 
 Dopo aver caricato il contenuto di questo pacchetto nella repository `giofed88/GF-AOS`, dalla CLI Codex: `codex plugin marketplace add giofed88/GF-AOS --ref main`; quindi aprire il catalogo plugin e installare `gf-aos-professional-studio`. La repository privata deve essere accessibile all'account GitHub usato da Codex. Il solo ZIP locale non rende disponibile il marketplace GitHub.
@@ -70,6 +86,7 @@ Dipendenze di estrazione: `pypdf`, `python-docx`, `openpyxl` e `python-pptx`. Il
 | Memoria strategica per caso | Inclusa come template Markdown |
 | Lifecycle, checkpoint e quality report | Incluso |
 | Ripresa SessionStart | Inclusa, opt-in tramite `GF_AOS_WORKSPACE` |
+| Workflow pack professionali ed eval specifici | Inclusi |
 | Drive e fascicoli remoti | Da collegare |
 | Scadenze programmate | Da collegare |
 | Telegram/TaskNotify | Da collegare e verificare |

@@ -18,6 +18,14 @@
 - Gli output non approvati mostrano `BOZZA DA VALIDARE`.
 - Le azioni esterne restano separate dalla validazione dell'output.
 - Il checkpoint contiene al massimo quattro prossime azioni e non conserva il transcript.
+- Ogni workflow pack contiene tutte le fasi e gli output minimi della propria specializzazione.
+- Un fascicolo completato non puo conservare fasi aperte nel piano di lavoro.
+- I pack non attivano `CRISIS_001` o `ODV_001` per analogia.
+
+## Capability eval per pack
+
+I casi canonici sono in `evals/workflow-packs/`: revisione, collegio, fiscale, lavoro,
+contenzioso e perizie. Ogni caso definisce input minimo, esito atteso e fallimenti bloccanti.
 
 ## Esito
 
