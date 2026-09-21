@@ -25,6 +25,10 @@ Ogni agente restituisce un handoff Markdown conforme a
 `plugins/gf-aos-professional-studio/skills/agent-orchestrator/references/handoff-contract.md`.
 Il coordinatore risolve contraddizioni, registra limiti e presenta all'utente un unico risultato.
 
+Per incarichi persistenti usa `case-lifecycle`: riprendi `CASE_MEMORY.md` all'avvio, crea un
+checkpoint al termine di ogni fase sostanziale e avvia `professional-evals` prima del verificatore
+finale. Il lifecycle non autorizza mai modifiche alle fonti o azioni esterne.
+
 ## Confini delle modifiche
 
 Gli agenti configurati in questa repository sono read-only. Possono leggere, analizzare e

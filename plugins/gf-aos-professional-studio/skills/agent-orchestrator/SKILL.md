@@ -18,6 +18,8 @@ lavora direttamente. Seleziona soltanto i ruoli necessari dal registro in
 5. L'independent reviewer cerca rilievi; il coordinatore corregge o registra i limiti.
 6. Il final verifier emette `PASS`, `PASS CON RILIEVI` o `BLOCKED`.
 7. L'output resta `BOZZA DA VALIDARE` fino al gate professionale `APPROVO OUTPUT`.
+8. Il context keeper consolida il checkpoint Markdown al termine della fase; il coordinatore
+   esegue il controllo strutturale `case-lifecycle quality` prima della chiusura.
 
 Non delegare l'approvazione professionale, la modifica delle fonti o un'azione esterna. Attiva
 `CRISIS_001` soltanto su incarico esplicito. Mantieni ogni specializzazione e conclusione distinta.

@@ -8,6 +8,10 @@ description: Comprime e ripristina il contesto di un incarico GF-AOS in Markdown
 Usa questa skill quando un incarico prosegue tra sessioni o il contesto diventa esteso. Aggiorna
 un solo checkpoint canonico per caso usando `references/case-memory-template.md`.
 
+Quando e disponibile un workspace locale, usare `scripts/case_lifecycle.py checkpoint` per
+versionare il checkpoint e `resume` per rileggerlo senza scritture. Non affidarsi al transcript
+come memoria persistente.
+
 Conserva: identita e modulo, ruolo, periodo, fatti confermati, decisioni, artefatti/versioni,
 fonti materiali, documenti mancanti, contraddizioni, blocker, approvazioni e prossime azioni.
 Scarta: cronologia conversazionale, tentativi superati, duplicati, ragionamento interno e dettagli
