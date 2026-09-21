@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.5.0
+- Agent Core ispirato ai pattern utili di Everything Claude Code e adattato a GF-AOS.
+- Otto ruoli Codex repository-local con profili stretti e sandbox read-only.
+- Nuova skill `agent-orchestrator` con delega minima, registro ruoli e handoff Markdown.
+- Nuova skill `strategic-context` con checkpoint canonico per singolo incarico.
+- Revisione indipendente e verifica finale separate dalla validazione professionale.
+- Limite di quattro subagenti concorrenti e nessun modello fissato, per contenere contesto e costi.
+- Test automatici per manifest, configurazione TOML, profili, gate e packaging delle skill.
+
 ## 0.4.0
 - Motore Document Intelligence locale per PDF, DOCX, XLSX/XLSM, PPTX, testo e CSV.
 - OCR immagini facoltativo tramite Tesseract, disattivato per impostazione predefinita.

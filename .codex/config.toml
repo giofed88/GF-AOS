@@ -1,0 +1,39 @@
+# GF-AOS repository-local multi-agent configuration.
+# Models are intentionally not pinned: Codex inherits the current selected model.
+
+[agents]
+enabled = true
+max_concurrent_threads_per_session = 4
+interrupt_message = true
+
+[agents.studio_coordinator]
+description = "Coordina l'incarico GF-AOS, seleziona le skill e consolida gli handoff senza sostituire l'approvazione professionale."
+config_file = "agents/studio-coordinator.toml"
+
+[agents.fascicolo_explorer]
+description = "Esplora fascicoli e documenti in sola lettura, registrando evidenze, locator e lacune senza formulare conclusioni."
+config_file = "agents/fascicolo-explorer.toml"
+
+[agents.engagement_planner]
+description = "Trasforma perimetro, scadenze e documenti disponibili in un piano di incarico verificabile."
+config_file = "agents/engagement-planner.toml"
+
+[agents.sources_researcher]
+description = "Verifica norme, prassi e giurisprudenza su fonti primarie e autorevoli, con data e applicabilita."
+config_file = "agents/sources-researcher.toml"
+
+[agents.independent_reviewer]
+description = "Riesamina criticamente evidenze, calcoli, ruolo professionale e limiti senza riscrivere l'elaborato."
+config_file = "agents/independent-reviewer.toml"
+
+[agents.context_keeper]
+description = "Comprimi lo stato dell'incarico in memoria Markdown, preservando decisioni, fonti, blocchi e prossime azioni."
+config_file = "agents/context-keeper.toml"
+
+[agents.dossier_builder]
+description = "Progetta il dossier professionale e collega conclusioni, carte di lavoro ed evidenze senza dichiararlo approvato."
+config_file = "agents/dossier-builder.toml"
+
+[agents.final_verifier]
+description = "Esegue il controllo finale indipendente e restituisce PASS, PASS CON RILIEVI o BLOCKED."
+config_file = "agents/final-verifier.toml"
