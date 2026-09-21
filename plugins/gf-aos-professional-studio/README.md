@@ -16,7 +16,11 @@ Legge nomi e metadati dei file senza aprirli e scrive solo nel percorso output. 
 
 `python3 plugins/gf-aos-professional-studio/scripts/document_intelligence.py /path/fascicolo --output-dir /path/workspace/document-intelligence`
 
-Estrae PDF, DOCX, XLSX/XLSM, PPTX, TXT, Markdown e CSV in un workspace separato. Per le immagini l'OCR è facoltativo con `--ocr` e richiede Tesseract. Il registro conserva hash SHA-256, metodo, anomalie e locator del testo. I sorgenti non vengono modificati; formule, macro, firme e collegamenti non vengono eseguiti o validati.
+Estrae PDF, DOCX, XLSX/XLSM, PPTX, TXT, Markdown e CSV in un workspace separato e normalizza il testo in file Markdown. Per le immagini l'OCR è facoltativo con `--ocr` e richiede Tesseract. Il registro conserva hash SHA-256, metodo, anomalie e locator del testo. I sorgenti non vengono modificati; formule, macro, firme e collegamenti non vengono eseguiti o validati.
+
+## Formato canonico
+
+GF-AOS preferisce Markdown UTF-8 per bozze, registri, note, checklist, sintesi e passaggi intermedi. JSON resta riservato allo stato macchina; DOCX, PDF, XLSX e PPTX vengono prodotti quando firma, stampa, formule, tabelle operative o presentazione richiedono il formato specifico.
 
 Dipendenze di estrazione: `pypdf`, `python-docx`, `openpyxl` e `python-pptx`. Il motore registra un errore per il singolo documento quando una dipendenza non è disponibile, senza alterare gli altri file.
 

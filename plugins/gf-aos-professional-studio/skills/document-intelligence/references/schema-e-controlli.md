@@ -6,9 +6,9 @@ Il workspace contiene:
 
 - `document_index.json`: registro strutturato;
 - `document_index.md`: riepilogo leggibile;
-- `text/*.txt`: testo estratto, identificato da nome normalizzato e prefisso hash.
+- `markdown/*.md`: testo estratto in Markdown, identificato da nome normalizzato e prefisso hash.
 
-Ogni record conserva percorso relativo, tipo, dimensione, ultima modifica, SHA-256, stato, estrattore, numero di caratteri, locator del testo, troncamento, dettagli tecnici e anomalie.
+Ogni record conserva percorso relativo, tipo, dimensione, ultima modifica, SHA-256, stato, estrattore, numero di caratteri, formato e locator del testo, troncamento, dettagli tecnici e anomalie.
 
 ## Stati
 

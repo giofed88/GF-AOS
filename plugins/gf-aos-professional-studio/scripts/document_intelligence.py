@@ -78,7 +78,7 @@ def extract_pdf(path: Path) -> tuple[str, dict]:
             raise ValueError("PDF cifrato non estraibile") from exc
     pages = []
     for index, page in enumerate(reader.pages, start=1):
-        pages.append(f"\n--- pagina {index} ---\n{page.extract_text() or ''}")
+        pages.append(f"\n## Pagina {index}\n\n{page.extract_text() or ''}")
     metadata = {str(k): str(v) for k, v in (reader.metadata or {}).items()}
     return "".join(pages).strip(), {"pages": len(reader.pages), "pdf_metadata": metadata}
 
@@ -91,7 +91,7 @@ def extract_docx(path: Path) -> tuple[str, dict]:
     parts = [paragraph.text for paragraph in document.paragraphs if paragraph.text]
     table_cells = 0
     for table_index, table in enumerate(document.tables, start=1):
-        parts.append(f"\n--- tabella {table_index} ---")
+        parts.append(f"\n## Tabella {table_index}\n")
         for row in table.rows:
             values = [cell.text.replace("\n", " ").strip() for cell in row.cells]
             table_cells += len(values)
@@ -121,7 +121,7 @@ def extract_spreadsheet(path: Path) -> tuple[str, dict]:
     parts, sheets, non_empty, formulas = [], [], 0, 0
     for sheet in workbook.worksheets:
         sheets.append(sheet.title)
-        parts.append(f"\n--- foglio: {sheet.title} ---")
+        parts.append(f"\n## Foglio: {sheet.title}\n\n```tsv")
         for row in sheet.iter_rows():
             values = []
             for cell in row:
@@ -134,6 +134,7 @@ def extract_spreadsheet(path: Path) -> tuple[str, dict]:
                 values.append(value.replace("\n", " "))
             if any(values):
                 parts.append("\t".join(values))
+        parts.append("```")
     workbook.close()
     return "\n".join(parts).strip(), {
         "sheets": sheets,
@@ -150,7 +151,7 @@ def extract_presentation(path: Path) -> tuple[str, dict]:
     presentation = Presentation(str(path))
     parts, text_shapes, tables = [], 0, 0
     for slide_index, slide in enumerate(presentation.slides, start=1):
-        parts.append(f"\n--- diapositiva {slide_index} ---")
+        parts.append(f"\n## Diapositiva {slide_index}\n")
         for shape in slide.shapes:
             if getattr(shape, "has_text_frame", False) and shape.text.strip():
                 text_shapes += 1
@@ -171,7 +172,7 @@ def extract_text(path: Path) -> tuple[str, dict]:
 
 
 def extract_csv(path: Path) -> tuple[str, dict]:
-    lines, rows = [], 0
+    lines, rows = ["```tsv"], 0
     with path.open("r", encoding="utf-8-sig", errors="replace", newline="") as handle:
         sample = handle.read(8192)
         handle.seek(0)
@@ -182,6 +183,7 @@ def extract_csv(path: Path) -> tuple[str, dict]:
         for row in csv.reader(handle, dialect):
             rows += 1
             lines.append("\t".join(value.replace("\n", " ") for value in row))
+    lines.append("```")
     return "\n".join(lines), {"rows": rows, "delimiter": dialect.delimiter}
 
 
@@ -251,7 +253,7 @@ def source_files(source: Path) -> list[Path]:
 def safe_locator(relative: str, digest: str) -> str:
     stem = Path(relative).stem[:60]
     cleaned = "".join(ch if ch.isalnum() or ch in "-_" else "_" for ch in stem)
-    return f"text/{cleaned or 'documento'}-{digest[:12]}.txt"
+    return f"markdown/{cleaned or 'documento'}-{digest[:12]}.md"
 
 
 def atomic_text_write(path: Path, content: str) -> None:
@@ -285,9 +287,9 @@ def build_index(
     if source.is_dir() and (output_dir == source or source in output_dir.parents):
         raise ValueError("Il workspace di output deve essere esterno alla cartella sorgente")
     output_dir.mkdir(parents=True, exist_ok=True)
-    text_dir = output_dir / "text"
+    text_dir = output_dir / "markdown"
     if text_dir.exists() and text_dir.is_symlink():
-        raise ValueError("Cartella testo simbolica non consentita")
+        raise ValueError("Cartella Markdown simbolica non consentita")
 
     base = source if source.is_dir() else source.parent
     records = []
@@ -305,6 +307,7 @@ def build_index(
             "extractor": None,
             "text_chars": 0,
             "text_locator": None,
+            "text_format": "markdown",
             "truncated": False,
             "details": {},
             "issues": [],

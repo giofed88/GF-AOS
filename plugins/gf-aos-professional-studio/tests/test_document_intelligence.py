@@ -61,6 +61,8 @@ class DocumentIntelligenceTest(unittest.TestCase):
             self.assertEqual(saved["source_mode"], "read_only")
             spreadsheet = next(item for item in saved["records"] if item["path"] == "situazione.xlsx")
             self.assertEqual(spreadsheet["details"]["formula_cells"], 1)
+            self.assertEqual(spreadsheet["text_format"], "markdown")
+            self.assertTrue(spreadsheet["text_locator"].endswith(".md"))
 
     def test_rejects_output_inside_source(self):
         with tempfile.TemporaryDirectory() as temporary:
