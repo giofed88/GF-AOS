@@ -1,7 +1,7 @@
 {
   "name": "gf-aos-professional-studio",
-  "version": "0.3.0",
-  "description": "Workflow professionali GF-AOS con fascicoli, scadenze e verifica delle evidenze.",
+  "version": "0.4.0",
+  "description": "Workflow GF-AOS con fascicoli, scadenze e Document Intelligence verificabile.",
   "repository": "https://github.com/giofed88/GF-AOS",
   "author": {
     "name": "Giovanni Federico"
@@ -10,7 +10,7 @@
   "interface": {
     "displayName": "GF-AOS Professional Studio",
     "shortDescription": "Fascicoli e flussi di lavoro dello studio.",
-    "longDescription": "Instrada gli incarichi, classifica documenti in sola lettura e prepara scadenze, briefing e output verificabili.",
+    "longDescription": "Instrada gli incarichi, inventaria ed estrae documenti in sola lettura e prepara scadenze, briefing e output verificabili.",
     "developerName": "Giovanni Federico",
     "category": "Productivity",
     "capabilities": ["Read", "Write"],
