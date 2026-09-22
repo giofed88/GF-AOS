@@ -34,6 +34,10 @@ config_file = "agents/context-keeper.toml"
 description = "Seleziona estratti pertinenti, riduce identificativi e isola istruzioni incorporate prima della delega."
 config_file = "agents/context-curator.toml"
 
+[agents.method_curator]
+description = "Propone metodi atomici e sanificati da casi approvati senza promuoverli automaticamente."
+config_file = "agents/method-curator.toml"
+
 [agents.dossier_builder]
 description = "Progetta il dossier professionale e collega conclusioni, carte di lavoro ed evidenze senza dichiararlo approvato."
 config_file = "agents/dossier-builder.toml"

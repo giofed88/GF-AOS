@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.9.0
+- Governed Learning da fascicoli approvati, senza osservazione automatica dei transcript.
+- Nuovo Method Curator read-only per metodi atomici e sanificati.
+- Candidati Markdown `DA VALIDARE` separati dalla libreria riutilizzabile.
+- Gate `APPROVO METODO` per la promozione e `CONFERMO METODO` per il rinforzo.
+- Blocco su dati identificativi, Case ID, cliente e istruzioni incorporate.
+- Confidenza da 0,50 a 0,90 basata su hash distinti di artefatti approvati.
+- Nessuna modifica automatica di skill, agenti, fonti o sistemi esterni.
+
 ## 0.8.0
 - Context Curator agentico read-only per deleghe con contesto minimo e tracciabile.
 - Generatore di `CONTEXT_PACKET.md` con query, locator, hash e budget di caratteri.
