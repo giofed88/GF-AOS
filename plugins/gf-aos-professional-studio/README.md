@@ -1,4 +1,4 @@
-# GF-AOS Professional Studio v0.7.0
+# GF-AOS Professional Studio v0.8.0
 
 Plugin Codex per instradamento professionale, orchestrazione agentica, pianificazione, inventario e Document Intelligence locale, scadenze, brief e verifica. **Nessun server MCP, collegamento Drive, automazione Telegram o scheduler è attivo in questo pacchetto**. Le integrazioni richiedono configurazione separata.
 
@@ -52,6 +52,25 @@ python3 plugins/gf-aos-professional-studio/scripts/workflow_packs.py validate /p
 lavoro e rifiuta di sovrascrivere file esistenti. `validate` applica l'eval specifico del modulo.
 I pack non includono `CRISIS_001` o `ODV_001` e non li attivano per analogia.
 
+## Context Curation & Confidentiality Guard
+
+La v0.8 prepara pacchetti Markdown mirati prima della delega agli agenti. Le sorgenti devono
+essere indicate esplicitamente e trovarsi nel workspace; il motore seleziona soltanto i paragrafi
+pertinenti alla query, conserva locator e hash, riduce gli identificativi e isola i blocchi che
+tentano di impartire istruzioni al modello.
+
+```bash
+python3 plugins/gf-aos-professional-studio/scripts/context_curator.py /path/workspace \
+  --source document-intelligence/registro-inventario.md \
+  --source EVIDENZE.md \
+  --query "valutazione rimanenze obsolescenza slow moving" \
+  --max-chars 12000
+```
+
+La riduzione `standard` maschera email, IBAN, codice fiscale e partita IVA. L'opzione
+`--redaction none` va usata soltanto quando l'identita e necessaria al compito e il destinatario
+e autorizzato. Il pacchetto derivato non sostituisce la fonte e non prova la completezza.
+
 ## Installazione da marketplace repository
 
 Dopo aver caricato il contenuto di questo pacchetto nella repository `giofed88/GF-AOS`, dalla CLI Codex: `codex plugin marketplace add giofed88/GF-AOS --ref main`; quindi aprire il catalogo plugin e installare `gf-aos-professional-studio`. La repository privata deve essere accessibile all'account GitHub usato da Codex. Il solo ZIP locale non rende disponibile il marketplace GitHub.
@@ -87,6 +106,7 @@ Dipendenze di estrazione: `pypdf`, `python-docx`, `openpyxl` e `python-pptx`. Il
 | Lifecycle, checkpoint e quality report | Incluso |
 | Ripresa SessionStart | Inclusa, opt-in tramite `GF_AOS_WORKSPACE` |
 | Workflow pack professionali ed eval specifici | Inclusi |
+| Context Curator e Confidentiality Guard | Inclusi |
 | Drive e fascicoli remoti | Da collegare |
 | Scadenze programmate | Da collegare |
 | Telegram/TaskNotify | Da collegare e verificare |

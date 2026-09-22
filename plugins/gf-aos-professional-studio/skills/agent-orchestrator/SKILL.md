@@ -12,13 +12,14 @@ lavora direttamente. Seleziona soltanto i ruoli necessari dal registro in
 ## Ciclo operativo
 
 1. Il coordinatore definisce modulo principale, workstream, ruolo, periodo, output e blocker.
-2. Explorer, planner e researcher possono lavorare in parallelo solo su perimetri non sovrapposti.
-3. Il coordinatore consolida gli handoff e risolve divergenze dichiarandole.
-4. Il dossier builder propone la struttura dell'artefatto senza approvarlo.
-5. L'independent reviewer cerca rilievi; il coordinatore corregge o registra i limiti.
-6. Il final verifier emette `PASS`, `PASS CON RILIEVI` o `BLOCKED`.
-7. L'output resta `BOZZA DA VALIDARE` fino al gate professionale `APPROVO OUTPUT`.
-8. Il context keeper consolida il checkpoint Markdown al termine della fase; il coordinatore
+2. Il context curator prepara, quando necessario, il pacchetto minimo per ciascuna delega.
+3. Explorer, planner e researcher possono lavorare in parallelo solo su perimetri non sovrapposti.
+4. Il coordinatore consolida gli handoff e risolve divergenze dichiarandole.
+5. Il dossier builder propone la struttura dell'artefatto senza approvarlo.
+6. L'independent reviewer cerca rilievi; il coordinatore corregge o registra i limiti.
+7. Il final verifier emette `PASS`, `PASS CON RILIEVI` o `BLOCKED`.
+8. L'output resta `BOZZA DA VALIDARE` fino al gate professionale `APPROVO OUTPUT`.
+9. Il context keeper consolida il checkpoint Markdown al termine della fase; il coordinatore
    esegue il controllo strutturale `case-lifecycle quality` prima della chiusura.
 
 Non delegare l'approvazione professionale, la modifica delle fonti o un'azione esterna. Attiva

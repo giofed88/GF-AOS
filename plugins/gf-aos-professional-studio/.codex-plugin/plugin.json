@@ -1,7 +1,7 @@
 {
   "name": "gf-aos-professional-studio",
-  "version": "0.7.0",
-  "description": "Workflow GF-AOS con pack professionali, lifecycle e controlli qualita verificabili.",
+  "version": "0.8.0",
+  "description": "Workflow GF-AOS con pack professionali, contesto minimizzato e controlli qualita verificabili.",
   "repository": "https://github.com/giofed88/GF-AOS",
   "author": {
     "name": "Giovanni Federico"
@@ -11,7 +11,7 @@
   "interface": {
     "displayName": "GF-AOS Professional Studio",
     "shortDescription": "Fascicoli e flussi di lavoro dello studio.",
-    "longDescription": "Coordina skill e ruoli agentici, applica workflow distinti per specializzazione, riprende fascicoli tramite checkpoint Markdown e verifica struttura e qualita prima della validazione professionale.",
+    "longDescription": "Coordina skill e ruoli agentici, applica workflow distinti, prepara pacchetti di contesto minimizzati, riprende fascicoli e verifica qualita prima della validazione professionale.",
     "developerName": "Giovanni Federico",
     "category": "Productivity",
     "capabilities": ["Read", "Write"],
