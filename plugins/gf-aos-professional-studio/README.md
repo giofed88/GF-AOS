@@ -1,4 +1,4 @@
-# GF-AOS Professional Studio v0.8.0
+# GF-AOS Professional Studio v0.9.0
 
 Plugin Codex per instradamento professionale, orchestrazione agentica, pianificazione, inventario e Document Intelligence locale, scadenze, brief e verifica. **Nessun server MCP, collegamento Drive, automazione Telegram o scheduler è attivo in questo pacchetto**. Le integrazioni richiedono configurazione separata.
 
@@ -71,6 +71,27 @@ La riduzione `standard` maschera email, IBAN, codice fiscale e partita IVA. L'op
 `--redaction none` va usata soltanto quando l'identita e necessaria al compito e il destinatario
 e autorizzato. Il pacchetto derivato non sostituisce la fonte e non prova la completezza.
 
+## Governed Learning
+
+La v0.9 conserva procedure riutilizzabili soltanto dopo la chiusura approvata del fascicolo.
+Non registra automaticamente transcript o tool call: il professionista predispone una breve
+lezione sanificata, il Method Curator propone un candidato e la promozione richiede un gate umano.
+
+```bash
+python3 plugins/gf-aos-professional-studio/scripts/governed_learning.py propose /path/workspace \
+  --lesson-file /path/lezione-sanificata.md \
+  --title "Verificare la quadratura prima della conclusione" \
+  --trigger "Quando una carta di lavoro contiene totali derivati"
+
+python3 plugins/gf-aos-professional-studio/scripts/governed_learning.py promote /path/workspace \
+  --candidate learning/candidates/<method-id>.md \
+  --library /path/gf-aos-method-library \
+  --note-file /path/nota.md --confirmation "APPROVO METODO"
+```
+
+La libreria conserva modulo, ambito, confidenza e hash delle evidenze approvate, non clienti o
+Case ID. L'eventuale trasformazione di un metodo in skill o agente resta una modifica separata.
+
 ## Installazione da marketplace repository
 
 Dopo aver caricato il contenuto di questo pacchetto nella repository `giofed88/GF-AOS`, dalla CLI Codex: `codex plugin marketplace add giofed88/GF-AOS --ref main`; quindi aprire il catalogo plugin e installare `gf-aos-professional-studio`. La repository privata deve essere accessibile all'account GitHub usato da Codex. Il solo ZIP locale non rende disponibile il marketplace GitHub.
@@ -107,6 +128,7 @@ Dipendenze di estrazione: `pypdf`, `python-docx`, `openpyxl` e `python-pptx`. Il
 | Ripresa SessionStart | Inclusa, opt-in tramite `GF_AOS_WORKSPACE` |
 | Workflow pack professionali ed eval specifici | Inclusi |
 | Context Curator e Confidentiality Guard | Inclusi |
+| Governed Learning e Method Curator | Inclusi |
 | Drive e fascicoli remoti | Da collegare |
 | Scadenze programmate | Da collegare |
 | Telegram/TaskNotify | Da collegare e verificare |

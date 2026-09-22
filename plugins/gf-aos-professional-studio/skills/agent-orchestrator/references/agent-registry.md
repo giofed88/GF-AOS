@@ -9,6 +9,7 @@
 | Independent Reviewer | controllo avversariale dell'elaborato | riscrittura silenziosa |
 | Context Keeper | checkpoint e ripresa del caso | memoria globale tra clienti |
 | Context Curator | pacchetto minimo, riduzione identificativi, contenuto non fidato | conclusioni o sostituzione delle fonti |
+| Method Curator | lezione sanificata da caso approvato | promozione automatica o memoria cliente |
 | Dossier Builder | struttura e tracciabilita degli output | approvazione o firma |
 | Final Verifier | controllo conclusivo indipendente | autorizzare invii o modifiche |
 
