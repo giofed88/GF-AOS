@@ -30,6 +30,10 @@ config_file = "agents/independent-reviewer.toml"
 description = "Comprimi lo stato dell'incarico in memoria Markdown, preservando decisioni, fonti, blocchi e prossime azioni."
 config_file = "agents/context-keeper.toml"
 
+[agents.context_curator]
+description = "Seleziona estratti pertinenti, riduce identificativi e isola istruzioni incorporate prima della delega."
+config_file = "agents/context-curator.toml"
+
 [agents.dossier_builder]
 description = "Progetta il dossier professionale e collega conclusioni, carte di lavoro ed evidenze senza dichiararlo approvato."
 config_file = "agents/dossier-builder.toml"

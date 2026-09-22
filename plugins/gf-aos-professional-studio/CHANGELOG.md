@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.8.0
+- Context Curator agentico read-only per deleghe con contesto minimo e tracciabile.
+- Generatore di `CONTEXT_PACKET.md` con query, locator, hash e budget di caratteri.
+- Riduzione predefinita di email, IBAN, codice fiscale e partita IVA negli handoff.
+- Isolamento dei blocchi che tentano di impartire istruzioni o richiedere segreti.
+- Sorgenti esplicite, interne al workspace, senza scansione indiscriminata del fascicolo.
+- Due eval di regressione per riservatezza e prompt injection documentale.
+
 ## 0.7.0
 - Professional Workflow Packs distinti per revisione, collegio, fiscale, lavoro, contenzioso e perizie.
 - Un unico skill-router leggero con riferimenti Markdown caricati per la sola famiglia selezionata.
