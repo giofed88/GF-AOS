@@ -221,7 +221,11 @@ class LifecycleQualityTest(unittest.TestCase):
                 if path.is_file()
             }
             self.assertEqual(resumed.returncode, 0, resumed.stderr)
-            self.assertIn("GF-AOS RESUME", resumed.stdout)
+            self.assertIn("GF-AOS SAFE RESUME", resumed.stdout)
+            self.assertNotIn("CASE-001", resumed.stdout)
+            self.assertNotIn("Cliente test", resumed.stdout)
+            self.assertNotIn(str(workspace), resumed.stdout)
+            self.assertNotIn("CASE_MEMORY", resumed.stdout.replace("CASE_MEMORY.md", ""))
             self.assertEqual(before, after)
 
     def test_hook_and_skills_are_packaged(self):

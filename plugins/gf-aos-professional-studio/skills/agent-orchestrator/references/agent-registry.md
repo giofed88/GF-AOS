@@ -10,13 +10,14 @@
 | Context Keeper | checkpoint e ripresa del caso | memoria globale tra clienti |
 | Context Curator | pacchetto minimo, riduzione identificativi, contenuto non fidato | conclusioni o sostituzione delle fonti |
 | Method Curator | lezione sanificata da caso approvato | promozione automatica o memoria cliente |
+| Privacy Guardian | scansione pre-handoff, pre-pubblicazione e integrita fonti | autorizzare invii o riportare valori sensibili |
 | Dossier Builder | struttura e tracciabilita degli output | approvazione o firma |
 | Final Verifier | controllo conclusivo indipendente | autorizzare invii o modifiche |
 
 ## Regola di selezione
 
 - Un solo documento semplice: nessuna delega obbligatoria.
-- Fascicolo complesso: context curator prima della delega, quindi explorer e planner; researcher solo se servono fonti correnti.
+- Fascicolo complesso: context curator e privacy guardian prima della delega, quindi explorer e planner; researcher solo se servono fonti correnti.
 - Output professionale dispositivo: reviewer e final verifier obbligatori.
 - Incarico multidisciplinare: un coordinatore e handoff separato per ogni workstream.
 - Crisi/advisor: nessun ruolo si attiva senza richiesta esplicita.

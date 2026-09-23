@@ -1,4 +1,4 @@
-# GF-AOS Professional Studio v0.9.0
+# GF-AOS Professional Studio v0.10.0
 
 Plugin Codex per instradamento professionale, orchestrazione agentica, pianificazione, inventario e Document Intelligence locale, scadenze, brief e verifica. **Nessun server MCP, collegamento Drive, automazione Telegram o scheduler è attivo in questo pacchetto**. Le integrazioni richiedono configurazione separata.
 
@@ -10,7 +10,8 @@ del contesto. La repository include la configurazione CLI in `.codex/config.toml
 in `.codex/agents/`. I modelli non sono fissati: viene ereditato quello selezionato in Codex.
 
 Le skill `agent-orchestrator` e `strategic-context` mantengono lo stesso metodo anche negli
-ambienti che non caricano automaticamente i profili repository-local. Gli agenti restituiscono
+ambienti che non caricano automaticamente i profili repository-local. Gli undici profili
+includono anche il Privacy Guardian. Gli agenti restituiscono
 handoff Markdown; il coordinatore conserva il controllo delle scritture e l'utente mantiene
 l'approvazione professionale.
 
@@ -32,9 +33,10 @@ python3 plugins/gf-aos-professional-studio/scripts/case_lifecycle.py checkpoint 
 python3 plugins/gf-aos-professional-studio/scripts/case_lifecycle.py quality /path/workspace
 ```
 
-L'hook Codex `SessionStart` e read-only: carica `CASE_MEMORY.md` soltanto quando la variabile
-`GF_AOS_WORKSPACE` indica esplicitamente il workspace. L'attivazione degli hook resta soggetta al
-controllo di fiducia di Codex. Nessun dato cliente viene scritto nella repository del plugin.
+L'hook Codex `SessionStart` e read-only e minimizzato: quando `GF_AOS_WORKSPACE` indica
+esplicitamente il workspace, restituisce soltanto impronta pseudonimizzata, modulo, stato,
+presenza del checkpoint e conteggi. Non carica automaticamente cliente, Case ID, memoria o testo
+delle azioni. L'attivazione degli hook resta soggetta al controllo di fiducia di Codex.
 
 ## Professional Workflow Packs
 
@@ -92,6 +94,31 @@ python3 plugins/gf-aos-professional-studio/scripts/governed_learning.py promote 
 La libreria conserva modulo, ambito, confidenza e hash delle evidenze approvate, non clienti o
 Case ID. L'eventuale trasformazione di un metodo in skill o agente resta una modifica separata.
 
+## Privacy-first Automation Guard
+
+La v0.10 estende la riservatezza a bootstrap, handoff, bozze esterne, pubblicazioni, log e
+controllo delle fonti. I report conservano categorie, conteggi e locator pseudonimizzati: non
+riproducono i valori rilevati, i nomi dei file o i percorsi assoluti.
+
+```bash
+python3 plugins/gf-aos-professional-studio/scripts/privacy_guard.py scan /path/workspace \
+  --file CONTEXT_PACKET.md --profile agent-handoff
+
+python3 plugins/gf-aos-professional-studio/scripts/privacy_guard.py snapshot /path/workspace \
+  --source-root /path/fonti-cliente
+
+python3 plugins/gf-aos-professional-studio/scripts/privacy_guard.py verify /path/workspace \
+  --source-root /path/fonti-cliente
+```
+
+I profili `agent-handoff` e `public` bloccano gli identificativi rilevati; `external-draft` e
+`internal` li segnalano come `WARN`. Segreti e istruzioni incorporate sono sempre bloccanti.
+Anche senza pattern, `agent-handoff` e `public` restituiscono `REVIEW_REQUIRED` finche la
+revisione contestuale non viene confermata con `--review-confirmation "CONFERMO REVISIONE PRIVACY"`
+e `--replace`. Solo `PASS` restituisce exit code zero; anche `WARN` arresta il flusso automatico.
+La scansione e euristica e non certifica anonimizzazione o conformita. `PASS` non autorizza
+invio, pubblicazione, deposito, firma o modifica delle fonti.
+
 ## Installazione da marketplace repository
 
 Dopo aver caricato il contenuto di questo pacchetto nella repository `giofed88/GF-AOS`, dalla CLI Codex: `codex plugin marketplace add giofed88/GF-AOS --ref main`; quindi aprire il catalogo plugin e installare `gf-aos-professional-studio`. La repository privata deve essere accessibile all'account GitHub usato da Codex. Il solo ZIP locale non rende disponibile il marketplace GitHub.
@@ -125,10 +152,11 @@ Dipendenze di estrazione: `pypdf`, `python-docx`, `openpyxl` e `python-pptx`. Il
 | Profili multi-agente Codex CLI | Inclusi nella repository |
 | Memoria strategica per caso | Inclusa come template Markdown |
 | Lifecycle, checkpoint e quality report | Incluso |
-| Ripresa SessionStart | Inclusa, opt-in tramite `GF_AOS_WORKSPACE` |
+| Ripresa SessionStart minimizzata | Inclusa, opt-in tramite `GF_AOS_WORKSPACE` |
 | Workflow pack professionali ed eval specifici | Inclusi |
 | Context Curator e Confidentiality Guard | Inclusi |
 | Governed Learning e Method Curator | Inclusi |
+| Privacy Guard per handoff, output e fonti | Incluso |
 | Drive e fascicoli remoti | Da collegare |
 | Scadenze programmate | Da collegare |
 | Telegram/TaskNotify | Da collegare e verificare |

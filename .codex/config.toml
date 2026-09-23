@@ -38,6 +38,10 @@ config_file = "agents/context-curator.toml"
 description = "Propone metodi atomici e sanificati da casi approvati senza promuoverli automaticamente."
 config_file = "agents/method-curator.toml"
 
+[agents.privacy_guardian]
+description = "Controlla minimizzazione, segreti e integrita delle fonti senza riprodurre dati sensibili."
+config_file = "agents/privacy-guardian.toml"
+
 [agents.dossier_builder]
 description = "Progetta il dossier professionale e collega conclusioni, carte di lavoro ed evidenze senza dichiararlo approvato."
 config_file = "agents/dossier-builder.toml"
