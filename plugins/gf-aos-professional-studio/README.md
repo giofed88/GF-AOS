@@ -1,6 +1,6 @@
-# GF-AOS Professional Studio v0.12.0
+# GF-AOS Professional Studio v0.13.0
 
-Plugin Codex per instradamento professionale, orchestrazione agentica, pianificazione, inventario e Document Intelligence locale, scadenze, brief e verifica. **Nessun server MCP, connettore Drive live, automazione Telegram o scheduler è attivo in questo pacchetto**. Le integrazioni richiedono configurazione separata.
+Plugin Codex per instradamento professionale, orchestrazione agentica, pianificazione, inventario e Document Intelligence locale, scadenze governate, brief e verifica. **Nessun server MCP, connettore Drive live, automazione Telegram o scheduler live è attivo in questo pacchetto**. Le integrazioni richiedono configurazione separata.
 
 ## Agent Core
 
@@ -10,8 +10,8 @@ del contesto. La repository include la configurazione CLI in `.codex/config.toml
 in `.codex/agents/`. I modelli non sono fissati: viene ereditato quello selezionato in Codex.
 
 Le skill `agent-orchestrator` e `strategic-context` mantengono lo stesso metodo anche negli
-ambienti che non caricano automaticamente i profili repository-local. I tredici profili
-includono anche Privacy Guardian, External Action Controller e Remote Dossier Controller. Gli agenti restituiscono
+ambienti che non caricano automaticamente i profili repository-local. I quattordici profili
+includono anche Privacy Guardian, External Action Controller, Remote Dossier Controller e Deadline Controller. Gli agenti restituiscono
 handoff Markdown; il coordinatore conserva il controllo delle scritture e l'utente mantiene
 l'approvazione professionale.
 
@@ -173,6 +173,32 @@ usare `AUTORIZZO MODIFICA SORGENTI`. `replace` e `delete` richiedono inoltre
 `AUTORIZZO OPERAZIONE IRREVERSIBILE <CHANGE_ID>`. Anche dopo i gate, l'esecuzione appartiene a un
 connettore esterno autorizzato e deve verificare identita, permessi e revisione corrente.
 
+## Governed Deadline and Reminder Engine
+
+La v0.13 introduce un registro locale delle scadenze con fonte verificabile, applicabilita,
+fuso `Europe/Rome`, conferma umana e controllo di integrita. Il motore non contiene calendari
+fiscali precompilati e non inventa termini: ogni scadenza nasce da una nota fonte interna,
+associata a un report Privacy Guard valido.
+
+```bash
+python3 plugins/gf-aos-professional-studio/scripts/deadlines.py propose /path/workspace \
+  --subject-ref CLIENTE_01 --obligation-code ADEMPIMENTO_01 --category fiscal \
+  --due-at 2026-11-30T18:00:00+01:00 --source-note fonte.md \
+  --privacy-report PRIVACY_REPORT.md
+
+python3 plugins/gf-aos-professional-studio/scripts/deadlines.py validate /path/workspace \
+  --deadline-id DL-YYYYMMDD-XXXXXXXX --note-file /path/validazione.md \
+  --confirmation "CONFERMO SCADENZA DL-YYYYMMDD-XXXXXXXX"
+
+python3 plugins/gf-aos-professional-studio/scripts/deadlines.py queue /path/workspace \
+  --as-of 2026-11-01 --horizon-days 30 --channel calendar
+```
+
+Solo una scadenza `VALIDATED` puo generare bozze reminder. La coda contiene riferimenti
+pseudonimizzati e resta `BOZZA PROMEMORIA`: ogni payload deve poi attraversare Privacy Guard e
+il gate delle azioni esterne. Nessun evento di calendario, messaggio Telegram o adempimento
+viene eseguito o dichiarato automaticamente.
+
 ## Installazione da marketplace repository
 
 Dopo aver caricato il contenuto di questo pacchetto nella repository `giofed88/GF-AOS`, dalla CLI Codex: `codex plugin marketplace add giofed88/GF-AOS --ref main`; quindi aprire il catalogo plugin e installare `gf-aos-professional-studio`. La repository privata deve essere accessibile all'account GitHub usato da Codex. Il solo ZIP locale non rende disponibile il marketplace GitHub.
@@ -213,7 +239,7 @@ Dipendenze di estrazione: `pypdf`, `python-docx`, `openpyxl` e `python-pptx`. Il
 | Privacy Guard per handoff, output e fonti | Incluso |
 | Coda governata delle azioni esterne | Inclusa, senza esecuzione automatica |
 | Drive e fascicoli remoti | Ponte governato incluso; connettore live da configurare e verificare |
-| Scadenze programmate | Da collegare |
+| Scadenze programmate | Motore governato e coda reminder inclusi; scheduler live da collegare |
 | Telegram/TaskNotify | Outbox pronta; connettore da collegare e verificare |
 | Dashboard GF-AOS | Da integrare |
 

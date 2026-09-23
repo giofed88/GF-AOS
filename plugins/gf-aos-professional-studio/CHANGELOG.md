@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.13.0
+- Governed Deadline and Reminder Engine senza calendario fiscale hard-coded.
+- Nota-fonte obbligatoria con fonte, regola, applicabilita e data verificata.
+- Alias pseudonimizzati e testo della fonte escluso dal registro scadenze.
+- Timezone `Europe/Rome` con controllo dell'offset applicabile alla data.
+- Gate `CONFERMO SCADENZA <DEADLINE_ID>` prima di agenda operativa e reminder.
+- Agenda Markdown con scaduti ancora aperti e nessun completamento automatico.
+- Coda idempotente `BOZZA PROMEMORIA` per calendario e Telegram personale.
+- Integrazione con Privacy Guard ed External Action Queue prima di qualsiasi invio.
+- Gate `CONFERMO ADEMPIMENTO <DEADLINE_ID>` distinto da ricevuta di deposito.
+- Nuovo Deadline Controller read-only e due eval dedicati.
+
 ## 0.12.0
 - Governed Remote Dossier Bridge per fascicoli Google Drive senza chiamate API incorporate.
 - Manifest del connettore limitato ad alias, metadati tecnici e hash; nomi, URL e ID reali vietati.
