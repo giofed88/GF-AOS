@@ -12,7 +12,9 @@ lavora direttamente. Seleziona soltanto i ruoli necessari dal registro in
 ## Ciclo operativo
 
 1. Il coordinatore definisce modulo principale, workstream, ruolo, periodo, output e blocker.
-2. Il context curator prepara, quando necessario, il pacchetto minimo per ciascuna delega.
+2. Il context curator prepara, quando necessario, il pacchetto minimo per ciascuna delega. Il
+   coordinatore esegue lo scanner con profilo `agent-handoff`; il Privacy Guardian read-only
+   riesamina il report prima che il pacchetto venga condiviso.
 3. Explorer, planner e researcher possono lavorare in parallelo solo su perimetri non sovrapposti.
 4. Il coordinatore consolida gli handoff e risolve divergenze dichiarandole.
 5. Il dossier builder propone la struttura dell'artefatto senza approvarlo.
@@ -24,6 +26,7 @@ lavora direttamente. Seleziona soltanto i ruoli necessari dal registro in
 
 Non delegare l'approvazione professionale, la modifica delle fonti o un'azione esterna. Attiva
 `CRISIS_001` soltanto su incarico esplicito. Mantieni ogni specializzazione e conclusione distinta.
+Un esito privacy `BLOCKED` interrompe il ciclo; `PASS` non sostituisce alcun gate umano.
 
 ## Economia del contesto
 

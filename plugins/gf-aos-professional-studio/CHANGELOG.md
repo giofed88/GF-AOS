@@ -1,5 +1,17 @@
 # Changelog
 
+## 0.10.0
+- Privacy-first Automation Guard per handoff, contenuti pubblici, bozze esterne e uso interno.
+- Bootstrap `SessionStart` minimizzato senza cliente, Case ID, memoria, percorsi o testo azioni.
+- Report privacy con sole categorie, conteggi e locator pseudonimizzati.
+- Revisione contestuale obbligatoria per ottenere `PASS` nei profili agentico e pubblico.
+- Blocco trasversale di credenziali, chiavi private e istruzioni incorporate.
+- Allowlist degli output derivati per impedire la sovrascrittura di file canonici del fascicolo.
+- Snapshot e verifica read-only delle fonti tramite hash, senza copiare nomi o contenuti.
+- `EVENT_LOG.md` rafforzato con locator hash al posto dei nomi di checkpoint e artefatti.
+- Nuovo Privacy Guardian read-only e preflight obbligatorio nel flusso agentico.
+- `PASS` esplicitamente separato da autorizzazione a invio, pubblicazione, deposito o modifica.
+
 ## 0.9.0
 - Governed Learning da fascicoli approvati, senza osservazione automatica dei transcript.
 - Nuovo Method Curator read-only per metodi atomici e sanificati.

@@ -11,14 +11,14 @@ AGENTS_DIR = ROOT / ".codex" / "agents"
 
 
 class AgentCoreTest(unittest.TestCase):
-    def test_manifest_and_agent_registry_are_v09(self):
+    def test_manifest_and_agent_registry_are_v010(self):
         manifest = json.loads((PLUGIN / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8"))
-        self.assertEqual(manifest["version"], "0.9.0")
+        self.assertEqual(manifest["version"], "0.10.0")
 
         config = tomllib.loads(CONFIG.read_text(encoding="utf-8"))
         agents = config["agents"]
         roles = {name: value for name, value in agents.items() if isinstance(value, dict)}
-        self.assertEqual(len(roles), 10)
+        self.assertEqual(len(roles), 11)
         self.assertEqual(agents["max_concurrent_threads_per_session"], 4)
 
         for role, declaration in roles.items():

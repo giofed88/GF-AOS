@@ -127,6 +127,10 @@ def append_event(workspace: Path, event: str, detail: str) -> None:
         handle.write(line)
 
 
+def locator_hash(value: object) -> str:
+    return hashlib.sha256(str(value).encode("utf-8")).hexdigest()[:16]
+
+
 def case_header(state: dict[str, Any]) -> str:
     return (
         "| Campo | Valore |\n| --- | --- |\n"
@@ -243,7 +247,7 @@ def command_checkpoint(args: argparse.Namespace) -> int:
         + "\n",
     )
     atomic_json(workspace / "CASE_STATE.json", state)
-    append_event(workspace, "CHECKPOINT_CREATED", f"locator={checkpoint_rel}; stato={args.status}; sha256={sha256(checkpoint)}")
+    append_event(workspace, "CHECKPOINT_CREATED", f"locator_hash={locator_hash(checkpoint_rel)}; stato={args.status}; sha256={sha256(checkpoint)}")
     print(checkpoint)
     return 0
 
@@ -383,7 +387,7 @@ def command_approve(args: argparse.Namespace) -> int:
         "temporale, deposito o trasmissione.\n"
     )
     atomic_text(workspace / "APPROVAL_RECEIPT.md", receipt)
-    append_event(workspace, "OUTPUT_APPROVED", f"artifact={artifact.relative_to(workspace)}; sha256={digest}")
+    append_event(workspace, "OUTPUT_APPROVED", f"artifact_hash={locator_hash(artifact.relative_to(workspace))}; sha256={digest}")
     print(f"APPROVATO {artifact.relative_to(workspace)} {digest}")
     return 0
 
