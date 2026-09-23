@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.11.0
+- Governed External Action Queue per email, PEC, Telegram personale, calendario, Drive e pubblicazioni.
+- Richieste vincolate agli hash di payload e report privacy, senza incorporare il contenuto nei registri.
+- Digest canonico dell'intera richiesta approvata, incluso alias target e tipo di azione.
+- Alias non identificativi obbligatori al posto di indirizzi o nominativi dei destinatari.
+- Gate `APPROVO AZIONE ESTERNA <ACTION_ID>` separato dall'approvazione professionale dell'output.
+- Gate aggiuntivo `APPROVO DATI NECESSARI` per identificativi indispensabili in azioni dirette.
+- Stato massimo `READY_FOR_EXTERNAL_EXECUTOR`, distinto da invio, pubblicazione o consegna.
+- Nuovo External Action Controller read-only e due eval dedicati.
+- Report privacy legato all'impronta aggregata dei contenuti esaminati.
+
 ## 0.10.0
 - Privacy-first Automation Guard per handoff, contenuti pubblici, bozze esterne e uso interno.
 - Bootstrap `SessionStart` minimizzato senza cliente, Case ID, memoria, percorsi o testo azioni.

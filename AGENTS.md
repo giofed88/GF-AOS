@@ -40,6 +40,11 @@ Prima di un handoff agentico, una pubblicazione o una bozza destinata a terzi us
 revisione e autorizzazione specifica. `PASS` non autorizza azioni esterne. Per fonti locali
 separate dal workspace crea uno snapshot e verifica l'integrita prima dell'output finale.
 
+Per email, PEC, Telegram, calendario, condivisioni Drive e pubblicazioni usa
+`external-action-governance`. Il plugin puo creare soltanto una richiesta
+`BOZZA RICHIESTA DI INVIO`: il coordinatore non deve trasformarla in una dichiarazione di invio
+o consegna. Risoluzione del destinatario ed esecuzione restano azioni esterne separate.
+
 Apprendi solo con `governed-learning` da fascicoli approvati e da una lezione deliberatamente
 sanificata. Non osservare automaticamente transcript o tool call. Un candidato metodo non entra
 nella libreria e non modifica skill o agenti senza il gate umano previsto.

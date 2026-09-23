@@ -1,7 +1,7 @@
 {
   "name": "gf-aos-professional-studio",
-  "version": "0.10.0",
-  "description": "Workflow GF-AOS con privacy rafforzata, apprendimento governato e controlli verificabili.",
+  "version": "0.11.0",
+  "description": "Workflow GF-AOS con azioni esterne governate, privacy rafforzata e controlli verificabili.",
   "repository": "https://github.com/giofed88/GF-AOS",
   "author": {
     "name": "Giovanni Federico"
@@ -11,7 +11,7 @@
   "interface": {
     "displayName": "GF-AOS Professional Studio",
     "shortDescription": "Fascicoli e flussi di lavoro dello studio.",
-    "longDescription": "Coordina skill e ruoli agentici, applica workflow distinti, minimizza dati e log, verifica le fonti e apprende metodi soltanto da casi approvati e con gate professionale.",
+    "longDescription": "Coordina skill e ruoli agentici, minimizza dati e log e prepara azioni esterne vincolate a privacy, hash e approvazione senza eseguirle automaticamente.",
     "developerName": "Giovanni Federico",
     "category": "Productivity",
     "capabilities": ["Read", "Write"],

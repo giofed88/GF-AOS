@@ -57,6 +57,11 @@ def digest_file(path: Path) -> str:
     return digest.hexdigest()
 
 
+def content_set_digest(paths: list[Path]) -> str:
+    members = sorted(digest_file(path) for path in paths)
+    return digest_bytes("".join(f"{item}\n" for item in members).encode("ascii"))
+
+
 def atomic_text(path: Path, content: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     fd, temporary = tempfile.mkstemp(prefix=f".{path.name}.", dir=path.parent)
@@ -173,6 +178,7 @@ def scan(args: argparse.Namespace) -> int:
         raise GuardError("Il report esiste gia; usare --replace per il solo report derivato")
     totals: Counter[str] = Counter()
     locators: list[tuple[str, int, str]] = []
+    sources: list[Path] = []
     for raw in args.file:
         path = inside(root, raw)
         if path == output or path.suffix.lower() not in TEXT_SUFFIXES:
@@ -180,6 +186,7 @@ def scan(args: argparse.Namespace) -> int:
         if path.stat().st_size > MAX_SCAN_BYTES:
             raise GuardError("File oltre 2 MiB")
         relative_hash = digest_bytes(str(path.relative_to(root)).encode("utf-8"))[:12]
+        sources.append(path)
         text = path.read_text(encoding="utf-8")
         for line_number, line in enumerate(text.splitlines(), 1):
             findings = scan_findings(line, state)
@@ -211,6 +218,8 @@ def scan(args: argparse.Namespace) -> int:
         f"- Profilo: `{args.profile}`",
         f"- Generato UTC: {now_iso()}",
         f"- File esaminati: {len(args.file)}",
+        f"- Content set SHA-256: `{content_set_digest(sources)}`",
+        f"- Revisione contestuale confermata: {'si' if args.review_confirmation == PRIVACY_CONFIRMATION else 'no'}",
         "",
         "## Categorie rilevate",
         "",
