@@ -1,5 +1,18 @@
 # Changelog
 
+## 0.12.0
+- Governed Remote Dossier Bridge per fascicoli Google Drive senza chiamate API incorporate.
+- Manifest del connettore limitato ad alias, metadati tecnici e hash; nomi, URL e ID reali vietati.
+- Baseline pseudonimizzata e verifica del drift con soli conteggi e locator hash.
+- Richieste di acquisizione esplicite, read-only e vincolate alla revisione remota attesa.
+- Importazioni instradate in `remote-imports/inbox`, senza sovrascrivere sorgenti o output.
+- Ricevuta di importazione verificata soltanto con nome pseudonimizzato e hash contenuto atteso.
+- Anteprima obbligatoria con operazione, impatto, rollback e differenza prima delle modifiche.
+- Gate `AUTORIZZO MODIFICA SORGENTI` separato dall'approvazione dell'output.
+- Gate aggiuntivo legato al Change ID per sostituzioni ed eliminazioni irreversibili.
+- Nuovo Remote Dossier Controller read-only e due eval dedicati.
+- Stato massimo locale distinto dall'esecuzione effettiva del connettore.
+
 ## 0.11.0
 - Governed External Action Queue per email, PEC, Telegram personale, calendario, Drive e pubblicazioni.
 - Richieste vincolate agli hash di payload e report privacy, senza incorporare il contenuto nei registri.

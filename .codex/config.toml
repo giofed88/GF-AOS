@@ -46,6 +46,10 @@ config_file = "agents/privacy-guardian.toml"
 description = "Riesamina gate e integrita delle richieste esterne senza eseguire invii o pubblicazioni."
 config_file = "agents/external-action-controller.toml"
 
+[agents.remote_dossier_controller]
+description = "Riesamina baseline, drift, revisioni e gate dei fascicoli remoti senza chiamare il provider."
+config_file = "agents/remote-dossier-controller.toml"
+
 [agents.dossier_builder]
 description = "Progetta il dossier professionale e collega conclusioni, carte di lavoro ed evidenze senza dichiararlo approvato."
 config_file = "agents/dossier-builder.toml"
