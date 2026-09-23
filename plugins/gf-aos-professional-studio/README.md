@@ -1,4 +1,4 @@
-# GF-AOS Professional Studio v0.10.0
+# GF-AOS Professional Studio v0.11.0
 
 Plugin Codex per instradamento professionale, orchestrazione agentica, pianificazione, inventario e Document Intelligence locale, scadenze, brief e verifica. **Nessun server MCP, collegamento Drive, automazione Telegram o scheduler è attivo in questo pacchetto**. Le integrazioni richiedono configurazione separata.
 
@@ -10,8 +10,8 @@ del contesto. La repository include la configurazione CLI in `.codex/config.toml
 in `.codex/agents/`. I modelli non sono fissati: viene ereditato quello selezionato in Codex.
 
 Le skill `agent-orchestrator` e `strategic-context` mantengono lo stesso metodo anche negli
-ambienti che non caricano automaticamente i profili repository-local. Gli undici profili
-includono anche il Privacy Guardian. Gli agenti restituiscono
+ambienti che non caricano automaticamente i profili repository-local. I dodici profili
+includono anche Privacy Guardian ed External Action Controller. Gli agenti restituiscono
 handoff Markdown; il coordinatore conserva il controllo delle scritture e l'utente mantiene
 l'approvazione professionale.
 
@@ -119,6 +119,29 @@ e `--replace`. Solo `PASS` restituisce exit code zero; anche `WARN` arresta il f
 La scansione e euristica e non certifica anonimizzazione o conformita. `PASS` non autorizza
 invio, pubblicazione, deposito, firma o modifica delle fonti.
 
+## Governed External Action Queue
+
+La v0.11 prepara richieste controllate per email, PEC, Telegram personale, calendario,
+condivisioni Drive e pubblicazioni. Il plugin non esegue queste azioni: lega la richiesta agli
+hash del payload e del report privacy, usa un alias non identificativo del destinatario e richiede
+un gate distinto dall'approvazione professionale dell'elaborato.
+
+```bash
+python3 plugins/gf-aos-professional-studio/scripts/external_actions.py prepare /path/workspace \
+  --kind email --target-ref CLIENTE_REFERENTE --payload outputs/comunicazione.md
+
+python3 plugins/gf-aos-professional-studio/scripts/external_actions.py approve /path/workspace \
+  --action-id EA-YYYYMMDD-XXXXXXXX --note-file /path/nota.md \
+  --confirmation "APPROVO AZIONE ESTERNA EA-YYYYMMDD-XXXXXXXX"
+
+python3 plugins/gf-aos-professional-studio/scripts/external_actions.py verify /path/workspace \
+  --action-id EA-YYYYMMDD-XXXXXXXX
+```
+
+Se il report `external-draft` contiene identificativi necessari, l'approvazione richiede anche
+una nota e `APPROVO DATI NECESSARI`. L'outbox resta `BOZZA RICHIESTA DI INVIO`; lo stato
+`READY_FOR_EXTERNAL_EXECUTOR` non prova invio o consegna e non contiene credenziali del provider.
+
 ## Installazione da marketplace repository
 
 Dopo aver caricato il contenuto di questo pacchetto nella repository `giofed88/GF-AOS`, dalla CLI Codex: `codex plugin marketplace add giofed88/GF-AOS --ref main`; quindi aprire il catalogo plugin e installare `gf-aos-professional-studio`. La repository privata deve essere accessibile all'account GitHub usato da Codex. Il solo ZIP locale non rende disponibile il marketplace GitHub.
@@ -157,9 +180,10 @@ Dipendenze di estrazione: `pypdf`, `python-docx`, `openpyxl` e `python-pptx`. Il
 | Context Curator e Confidentiality Guard | Inclusi |
 | Governed Learning e Method Curator | Inclusi |
 | Privacy Guard per handoff, output e fonti | Incluso |
+| Coda governata delle azioni esterne | Inclusa, senza esecuzione automatica |
 | Drive e fascicoli remoti | Da collegare |
 | Scadenze programmate | Da collegare |
-| Telegram/TaskNotify | Da collegare e verificare |
+| Telegram/TaskNotify | Outbox pronta; connettore da collegare e verificare |
 | Dashboard GF-AOS | Da integrare |
 
 Il codice sorgente di questa versione è conservato nella repository indicata. L'installazione e le integrazioni esterne restano passaggi separati.

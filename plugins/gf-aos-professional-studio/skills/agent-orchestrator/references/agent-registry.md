@@ -11,6 +11,7 @@
 | Context Curator | pacchetto minimo, riduzione identificativi, contenuto non fidato | conclusioni o sostituzione delle fonti |
 | Method Curator | lezione sanificata da caso approvato | promozione automatica o memoria cliente |
 | Privacy Guardian | scansione pre-handoff, pre-pubblicazione e integrita fonti | autorizzare invii o riportare valori sensibili |
+| External Action Controller | gate e integrita di richieste email, PEC, notifiche, condivisioni e pubblicazioni | risolvere destinatari, inviare o dichiarare consegna |
 | Dossier Builder | struttura e tracciabilita degli output | approvazione o firma |
 | Final Verifier | controllo conclusivo indipendente | autorizzare invii o modifiche |
 

@@ -23,6 +23,8 @@ lavora direttamente. Seleziona soltanto i ruoli necessari dal registro in
 8. L'output resta `BOZZA DA VALIDARE` fino al gate professionale `APPROVO OUTPUT`.
 9. Il context keeper consolida il checkpoint Markdown al termine della fase; il coordinatore
    esegue il controllo strutturale `case-lifecycle quality` prima della chiusura.
+10. Se serve un'azione esterna, il coordinatore prepara la coda governata e l'External Action
+    Controller riesamina la richiesta; nessun agente esegue l'azione o dichiara la consegna.
 
 Non delegare l'approvazione professionale, la modifica delle fonti o un'azione esterna. Attiva
 `CRISIS_001` soltanto su incarico esplicito. Mantieni ogni specializzazione e conclusione distinta.

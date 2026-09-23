@@ -42,6 +42,10 @@ config_file = "agents/method-curator.toml"
 description = "Controlla minimizzazione, segreti e integrita delle fonti senza riprodurre dati sensibili."
 config_file = "agents/privacy-guardian.toml"
 
+[agents.external_action_controller]
+description = "Riesamina gate e integrita delle richieste esterne senza eseguire invii o pubblicazioni."
+config_file = "agents/external-action-controller.toml"
+
 [agents.dossier_builder]
 description = "Progetta il dossier professionale e collega conclusioni, carte di lavoro ed evidenze senza dichiararlo approvato."
 config_file = "agents/dossier-builder.toml"
