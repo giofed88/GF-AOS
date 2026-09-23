@@ -50,6 +50,10 @@ config_file = "agents/external-action-controller.toml"
 description = "Riesamina baseline, drift, revisioni e gate dei fascicoli remoti senza chiamare il provider."
 config_file = "agents/remote-dossier-controller.toml"
 
+[agents.deadline_controller]
+description = "Riesamina fonti, applicabilita, timezone, gate e promemoria senza inventare termini o inviare notifiche."
+config_file = "agents/deadline-controller.toml"
+
 [agents.dossier_builder]
 description = "Progetta il dossier professionale e collega conclusioni, carte di lavoro ed evidenze senza dichiararlo approvato."
 config_file = "agents/dossier-builder.toml"

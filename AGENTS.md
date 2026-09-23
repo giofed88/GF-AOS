@@ -51,6 +51,11 @@ derivato. Una modifica remota richiede anteprima, privacy, rollback e il gate se
 `AUTORIZZO MODIFICA SORGENTI`; sostituzioni ed eliminazioni richiedono anche il gate irreversibile.
 Il plugin prepara richieste ma non chiama il provider e non dichiara sincronizzazione.
 
+Per scadenze e promemoria usa `deadlines-brief`. Non inserire termini normativi senza nota-fonte
+e verifica di applicabilita. La validazione professionale della scadenza non autorizza calendario
+o notifiche: genera soltanto bozze pseudonimizzate e passale a `external-action-governance`.
+Non segnare automaticamente completata una scadenza scaduta.
+
 Apprendi solo con `governed-learning` da fascicoli approvati e da una lezione deliberatamente
 sanificata. Non osservare automaticamente transcript o tool call. Un candidato metodo non entra
 nella libreria e non modifica skill o agenti senza il gate umano previsto.
