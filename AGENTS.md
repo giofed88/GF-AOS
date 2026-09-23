@@ -45,6 +45,12 @@ Per email, PEC, Telegram, calendario, condivisioni Drive e pubblicazioni usa
 `BOZZA RICHIESTA DI INVIO`: il coordinatore non deve trasformarla in una dichiarazione di invio
 o consegna. Risoluzione del destinatario ed esecuzione restano azioni esterne separate.
 
+Per fascicoli Google Drive usa `remote-dossier-bridge`. Accetta solo manifest pseudonimizzati,
+verifica la baseline prima di leggere o proporre modifiche e importa esclusivamente in un inbox
+derivato. Una modifica remota richiede anteprima, privacy, rollback e il gate separato
+`AUTORIZZO MODIFICA SORGENTI`; sostituzioni ed eliminazioni richiedono anche il gate irreversibile.
+Il plugin prepara richieste ma non chiama il provider e non dichiara sincronizzazione.
+
 Apprendi solo con `governed-learning` da fascicoli approvati e da una lezione deliberatamente
 sanificata. Non osservare automaticamente transcript o tool call. Un candidato metodo non entra
 nella libreria e non modifica skill o agenti senza il gate umano previsto.

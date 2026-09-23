@@ -263,7 +263,7 @@ class PrivacyGuardTest(unittest.TestCase):
 
     def test_packaging(self):
         manifest = json.loads((PLUGIN / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8"))
-        self.assertEqual(manifest["version"], "0.11.0")
+        self.assertEqual(manifest["version"], "0.12.0")
         for relative in (
             "skills/privacy-automation/SKILL.md",
             "skills/privacy-automation/references/privacy-contract.md",
