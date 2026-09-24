@@ -317,7 +317,7 @@ class StudioDashboardTest(unittest.TestCase):
 
     def test_v015_packaging_contains_dashboard_contract_agent_and_evals(self):
         manifest = json.loads((PLUGIN / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8"))
-        self.assertEqual(manifest["version"], "0.16.0")
+        self.assertEqual(manifest["version"], "0.17.0")
         required = [
             ROOT / ".codex" / "agents" / "studio-dashboard-controller.toml",
             PLUGIN / "scripts" / "studio_dashboard.py",

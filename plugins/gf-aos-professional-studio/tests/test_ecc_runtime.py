@@ -136,7 +136,7 @@ class EccRuntimeTest(unittest.TestCase):
 
     def test_v015_packaging(self):
         manifest = json.loads((PLUGIN / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8"))
-        self.assertEqual(manifest["version"], "0.16.0")
+        self.assertEqual(manifest["version"], "0.17.0")
         hooks = json.loads((PLUGIN / "hooks" / "codex-hooks.json").read_text(encoding="utf-8"))["hooks"]
         for event in ("SessionStart", "PreCompact", "PostCompact", "SubagentStart", "Stop", "SessionEnd"):
             self.assertIn(event, hooks)
