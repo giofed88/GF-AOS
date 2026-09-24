@@ -1,4 +1,4 @@
-# GF-AOS Professional Studio v0.15.0 — bozza locale
+# GF-AOS Professional Studio v0.16.0
 
 Plugin Codex per instradamento professionale, orchestrazione agentica, pianificazione, inventario e Document Intelligence locale, scadenze governate, brief e verifica. **Nessun server MCP, connettore Drive live, automazione Telegram o scheduler live è attivo in questo pacchetto**. Le integrazioni richiedono configurazione separata.
 
@@ -14,6 +14,39 @@ ambienti che non caricano automaticamente i profili repository-local. I quindici
 includono anche Privacy Guardian, External Action Controller, Remote Dossier Controller, Deadline Controller e Studio Dashboard Controller. Gli agenti restituiscono
 handoff Markdown; il coordinatore conserva il controllo delle scritture e l'utente mantiene
 l'approvazione professionale.
+
+## ECC Runtime Completion
+
+La v0.15 aggiunge un Eval Harness unico e hook lifecycle privacy-first. Il runtime verifica il
+checkpoint prima della compattazione, ripristina un bootstrap minimo, limita il contesto dei
+subagenti e registra soltanto reference hash. Non legge `transcript_path` e non conserva prompt o
+output dei tool. Dopo ogni modifica degli hook, Codex richiede una nuova revisione di attendibilita.
+
+```bash
+python3 plugins/gf-aos-professional-studio/scripts/eval_harness.py \
+  --repo /path/GF-AOS --output-dir /path/eval-report --as-of 2026-09-24
+```
+
+Il report deve essere scritto fuori dalla repository. `PASS` attesta la regressione tecnica, non
+approva output professionali e non autorizza azioni esterne.
+
+Per lettere d'incarico e altri format, la v0.15 applica un ordine source-first: consulta prima
+OneDrive o SharePoint dello studio in sola lettura, seleziona riferimenti finali o firmati senza
+trasferire dati cliente, quindi verifica le lacune su fonti ufficiali. Il template risultante usa
+una privacy rafforzata e non modifica mai la sorgente remota senza gate dedicato.
+
+## Design system documentale
+
+La v0.16 applica l'intestazione GF approvata come blocco identitario stabile tra Word e PDF,
+lasciando editabili tipo documento, data, revisione e contenuti. I profili disponibili sono
+`engagement-letter`, `professional-report`, `minutes` e `working-paper`. I template versionati
+usano soltanto segnaposto, restano `BOZZA DA VALIDARE` e devono essere renderizzati e ispezionati
+prima della consegna.
+
+```bash
+python3 plugins/gf-aos-professional-studio/scripts/build_document_style_template.py output.docx \
+  --profile professional-report
+```
 
 ## Lifecycle & Quality Engine
 
@@ -144,7 +177,8 @@ una nota e `APPROVO DATI NECESSARI`. L'outbox resta `BOZZA RICHIESTA DI INVIO`; 
 
 ## Governed Remote Dossier Bridge
 
-La v0.12 collega logicamente i fascicoli Google Drive senza incorporare credenziali o chiamate
+La v0.12 collega logicamente i fascicoli remoti; la v0.15 estende il contratto a Google Drive,
+OneDrive e SharePoint senza incorporare credenziali o chiamate
 API. Un connettore autorizzato produce un manifest pseudonimizzato: il plugin accetta alias,
 metadati tecnici e hash, ma rifiuta nomi, URL e ID reali del provider. La baseline consente di
 rilevare aggiunte, rimozioni e revisioni mutate prima di qualunque acquisizione.

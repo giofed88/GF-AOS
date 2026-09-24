@@ -11,9 +11,9 @@ AGENTS_DIR = ROOT / ".codex" / "agents"
 
 
 class AgentCoreTest(unittest.TestCase):
-    def test_manifest_and_agent_registry_are_v014(self):
+    def test_manifest_and_agent_registry_are_v015(self):
         manifest = json.loads((PLUGIN / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8"))
-        self.assertEqual(manifest["version"], "0.15.0")
+        self.assertEqual(manifest["version"], "0.16.0")
 
         config = tomllib.loads(CONFIG.read_text(encoding="utf-8"))
         agents = config["agents"]

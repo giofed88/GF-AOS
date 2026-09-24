@@ -1,6 +1,26 @@
 # Changelog
 
-## 0.15.0 — bozza locale
+## 0.16.0
+- Design system documentale GF-AOS basato sull'intestazione approvata con monogramma GF.
+- Blocco identitario ad alta risoluzione stabile tra Word e PDF, con metadati editabili.
+- Profili riutilizzabili per lettere d'incarico, relazioni, verbali e carte di lavoro.
+- Contratto grafico con A4, palette controllata, gerarchia tipografica e resa non standardizzata.
+- Template versionati privi di dati reali e marcati `BOZZA DA VALIDARE`.
+- Eval dedicato alla parità Word/PDF e test automatici su struttura, profili e sanificazione.
+
+## 0.15.0
+- ECC Runtime con Eval Harness deterministico e report JSON/Markdown esterni alla repository.
+- Controlli unificati su specifiche eval, skill, JSON/TOML, sintassi Python e regressione.
+- Hook supportati per `PreCompact`, `PostCompact`, `SubagentStart`, `Stop` e `SessionEnd`.
+- Compattazione bloccata senza memoria canonica e ripresa tramite bootstrap minimizzato.
+- Contesto subagente limitato a modulo, stato e regole, senza cliente, Case ID o percorsi.
+- Nessuna lettura o conservazione del transcript negli hook GF-AOS.
+- Eventi sessione pseudonimizzati con reference hash.
+- Contratto runtime e due eval dedicati.
+- Remote Dossier Bridge esteso a OneDrive e SharePoint senza accesso API incorporato.
+- Contratto source-first per i format: documenti dello studio in sola lettura, poi fonti ufficiali.
+- Privacy rafforzata nei template con minimizzazione, basi giuridiche, conservazione e diritti.
+- Acquisizione dei format professionali subordinata alla disponibilita read-only del connettore.
 - Selezione governata dei format privati OneDrive per incarico, ruolo e specializzazione.
 - Scheda comparativa Markdown generata in workspace senza copie di lettere o dati cliente nel repository.
 - Verifica obbligatoria di versioni, incongruenze, clausole variabili e aggiornamento normativo.

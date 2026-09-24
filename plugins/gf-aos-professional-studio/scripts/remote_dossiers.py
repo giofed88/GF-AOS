@@ -34,7 +34,7 @@ from privacy_guard import (
 
 
 SCHEMA_VERSION = 1
-PROVIDER = "google-drive"
+ALLOWED_PROVIDERS = {"google-drive", "onedrive", "sharepoint"}
 ALIAS_RE = re.compile(r"^[A-Z0-9][A-Z0-9_.:-]{1,63}$")
 HASH_RE = re.compile(r"^[a-f0-9]{64}$")
 CHANGE_ID_RE = re.compile(r"^RC-[0-9]{8}-[A-F0-9]{8}$")
@@ -55,6 +55,7 @@ ALLOWED_IMPORT_SUFFIXES = {
 SOURCE_CONFIRMATION = "AUTORIZZO MODIFICA SORGENTI"
 CHANGE_DIGEST_FIELDS = (
     "change_id",
+    "provider",
     "source_ref",
     "object_ref",
     "target_ref",
@@ -167,7 +168,8 @@ def valid_timestamp(value: str) -> bool:
 
 
 def validate_manifest(value: dict[str, Any]) -> dict[str, Any]:
-    if value.get("schema_version") != SCHEMA_VERSION or value.get("provider") != PROVIDER:
+    provider = str(value.get("provider", ""))
+    if value.get("schema_version") != SCHEMA_VERSION or provider not in ALLOWED_PROVIDERS:
         raise RemoteDossierError("Manifest remoto non supportato")
     source_ref = validate_alias(value.get("source_ref"), "source_ref")
     captured_at = str(value.get("captured_at", ""))
@@ -231,7 +233,7 @@ def validate_manifest(value: dict[str, Any]) -> dict[str, Any]:
             cursor = parents.get(cursor, "ROOT")
     return {
         "schema_version": SCHEMA_VERSION,
-        "provider": PROVIDER,
+        "provider": provider,
         "source_ref": source_ref,
         "captured_at": captured_at,
         "items": sorted(normalized, key=lambda item: item["object_ref"]),
@@ -271,7 +273,10 @@ def load_baseline(root: Path) -> dict[str, Any]:
 
 
 def diff_manifest(baseline: dict[str, Any], current: dict[str, Any]) -> dict[str, list[str]]:
-    if baseline["source_ref"] != current["source_ref"]:
+    if (
+        baseline["provider"] != current["provider"]
+        or baseline["source_ref"] != current["source_ref"]
+    ):
         raise RemoteDossierError("Il manifest corrente appartiene a una sorgente diversa")
     old = {item["object_ref"]: item for item in baseline["items"]}
     new = {item["object_ref"]: item for item in current["items"]}
@@ -308,7 +313,7 @@ def command_register(args: argparse.Namespace) -> int:
     files = len(manifest["items"]) - folders
     index = (
         "# GF-AOS Remote Dossier Index\n\n"
-        f"- Provider: `{PROVIDER}`\n"
+        f"- Provider: `{manifest['provider']}`\n"
         f"- Source ref: `{manifest['source_ref']}`\n"
         f"- Snapshot SHA-256: `{value['manifest_sha256']}`\n"
         f"- Oggetti: {len(manifest['items'])}\n"
@@ -392,7 +397,7 @@ def command_request_read(args: argparse.Namespace) -> int:
         "schema_version": SCHEMA_VERSION,
         "status": "BOZZA RICHIESTA LETTURA",
         "request_id": read_id,
-        "provider": PROVIDER,
+        "provider": baseline["manifest"]["provider"],
         "source_ref": baseline["manifest"]["source_ref"],
         "baseline_sha256": baseline["manifest_sha256"],
         "objects": selected,
@@ -421,7 +426,7 @@ def load_read_request(root: Path, read_id: str) -> dict[str, Any]:
         not isinstance(value, dict)
         or value.get("schema_version") != SCHEMA_VERSION
         or value.get("request_id") != read_id
-        or value.get("provider") != PROVIDER
+        or value.get("provider") not in ALLOWED_PROVIDERS
         or value.get("status") != "BOZZA RICHIESTA LETTURA"
         or value.get("read_only") is not True
         or value.get("execution_claimed") is not False
@@ -439,6 +444,7 @@ def command_verify_import(args: argparse.Namespace) -> int:
     if (
         request.get("baseline_sha256") != baseline["manifest_sha256"]
         or request.get("source_ref") != baseline["manifest"]["source_ref"]
+        or request.get("provider") != baseline["manifest"]["provider"]
     ):
         raise RemoteDossierError("Richiesta di lettura non coerente con la baseline")
     object_ref = validate_alias(args.object_ref, "object_ref")
@@ -590,7 +596,7 @@ def command_prepare_change(args: argparse.Namespace) -> int:
     record = {
         "schema_version": SCHEMA_VERSION,
         "change_id": change_id,
-        "provider": PROVIDER,
+        "provider": baseline["manifest"]["provider"],
         "source_ref": baseline["manifest"]["source_ref"],
         "object_ref": object_ref,
         "target_ref": target_ref,
@@ -626,6 +632,7 @@ def load_change(root: Path, change_id: str) -> tuple[dict[str, Any], Path, Path,
         or record.get("schema_version") != SCHEMA_VERSION
         or record.get("change_id") != change_id
         or record.get("operation") not in ALLOWED_OPERATIONS
+        or record.get("provider") not in ALLOWED_PROVIDERS
         or record.get("irreversible") != (record.get("operation") in IRREVERSIBLE_OPERATIONS)
         or not ALIAS_RE.fullmatch(str(record.get("source_ref", "")))
         or not ALIAS_RE.fullmatch(str(record.get("object_ref", "")))
@@ -646,6 +653,13 @@ def load_change(root: Path, change_id: str) -> tuple[dict[str, Any], Path, Path,
 def command_approve_change(args: argparse.Namespace) -> int:
     root, state = workspace(args.workspace)
     record, record_path, outbox_path, preview, report = load_change(root, args.change_id)
+    baseline = load_baseline(root)
+    if (
+        record.get("provider") != baseline["manifest"]["provider"]
+        or record.get("source_ref") != baseline["manifest"]["source_ref"]
+        or record.get("baseline_sha256") != baseline["manifest_sha256"]
+    ):
+        raise RemoteDossierError("Modifica non coerente con la baseline")
     if record.get("status") != "PREPARED" or args.confirmation != SOURCE_CONFIRMATION:
         raise RemoteDossierError("Gate di modifica sorgenti non valido")
     if record["irreversible"] and args.irreversible_confirmation != f"AUTORIZZO OPERAZIONE IRREVERSIBILE {args.change_id}":
@@ -665,7 +679,7 @@ def command_approve_change(args: argparse.Namespace) -> int:
     request = {
         **{field: record.get(field) for field in CHANGE_DIGEST_FIELDS},
         "schema_version": SCHEMA_VERSION,
-        "provider": PROVIDER,
+        "provider": record["provider"],
         "status": "BOZZA RICHIESTA MODIFICA SORGENTI",
         "approved_at": approval["approved_at"],
         "approved_change_sha256": approval["approved_change_sha256"],
@@ -685,7 +699,12 @@ def assert_change_ready(root: Path, state: dict[str, Any], change_id: str, manif
     record, _, outbox_path, preview, report = load_change(root, change_id)
     if record.get("status") != "APPROVED_FOR_EXTERNAL_EXECUTOR" or not outbox_path.is_file() or outbox_path.is_symlink():
         raise RemoteDossierError("Modifica non pronta")
-    if record.get("baseline_sha256") != baseline["manifest_sha256"] or record.get("current_state_sha256") != source_state_digest(current):
+    if (
+        record.get("provider") != baseline["manifest"]["provider"]
+        or record.get("provider") != current["provider"]
+        or record.get("baseline_sha256") != baseline["manifest_sha256"]
+        or record.get("current_state_sha256") != source_state_digest(current)
+    ):
         raise RemoteDossierError("Baseline o manifest non coerenti")
     item = baseline_items(baseline).get(str(record["object_ref"]))
     if item is None or item["revision_sha256"] != record.get("expected_revision_sha256"):

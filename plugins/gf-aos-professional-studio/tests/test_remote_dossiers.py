@@ -26,13 +26,15 @@ class RemoteDossiersTest(unittest.TestCase):
         manifest = json.loads(
             (PLUGIN / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8")
         )
-        self.assertEqual(manifest["version"], "0.15.0")
+        self.assertEqual(manifest["version"], "0.16.0")
         for relative in (
             "scripts/remote_dossiers.py",
             "skills/remote-dossier-bridge/SKILL.md",
             "skills/remote-dossier-bridge/references/remote-dossier-contract.md",
+            "skills/professional-output/references/template-source-contract.md",
             "evals/remote-dossiers/read-only-import.md",
             "evals/remote-dossiers/source-change.md",
+            "evals/professional-output/template-source-priority.md",
         ):
             self.assertTrue((PLUGIN / relative).is_file(), relative)
         self.assertTrue((ROOT / ".codex" / "agents" / "remote-dossier-controller.toml").is_file())
@@ -145,6 +147,42 @@ class RemoteDossiersTest(unittest.TestCase):
             self.assertNotIn("name", json.dumps(value).lower())
             self.assertNotIn("http", json.dumps(value).lower())
             self.assertEqual(outbox.stat().st_mode & 0o777, 0o600)
+
+    def test_supported_cloud_providers_remain_read_only(self):
+        for provider in ("google-drive", "onedrive", "sharepoint"):
+            with self.subTest(provider=provider), tempfile.TemporaryDirectory() as temp:
+                root = Path(temp)
+                workspace = self.workspace(root)
+                value = self.manifest_value()
+                value["provider"] = provider
+                manifest = self.write_manifest(root, value)
+                self.register(workspace, manifest)
+                request = run(
+                    REMOTE, "request-read", str(workspace), "--manifest", str(manifest),
+                    "--object-ref", "DOCUMENTO_01",
+                )
+                self.assertEqual(request.returncode, 0, request.stderr)
+                outbox = next((workspace / "remote-dossiers" / "outbox").glob("*.read.json"))
+                payload = json.loads(outbox.read_text(encoding="utf-8"))
+                self.assertEqual(payload["provider"], provider)
+                self.assertTrue(payload["read_only"])
+                self.assertFalse(payload["execution_claimed"])
+
+    def test_template_source_contract_is_internal_first_and_privacy_strong(self):
+        contract = (
+            PLUGIN / "skills" / "professional-output" / "references"
+            / "template-source-contract.md"
+        ).read_text(encoding="utf-8")
+        internal = contract.index("OneDrive e SharePoint")
+        official = contract.index("fonti ufficiali aggiornate")
+        self.assertLess(internal, official)
+        for required in (
+            "sola lettura",
+            "basi giuridiche",
+            "conservazione",
+            "AUTORIZZO MODIFICA SORGENTI",
+        ):
+            self.assertIn(required, contract)
 
     def test_remote_drift_blocks_read_and_uses_hashed_locators(self):
         with tempfile.TemporaryDirectory() as temp:
@@ -304,6 +342,40 @@ class RemoteDossiersTest(unittest.TestCase):
                 "--manifest", str(changed),
             )
             self.assertEqual(drifted.returncode, 2)
+
+    def test_provider_tampering_blocks_approval_and_verification(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            workspace = self.workspace(root)
+            value = self.manifest_value()
+            value["provider"] = "onedrive"
+            manifest = self.write_manifest(root, value)
+            self.register(workspace, manifest)
+            preview = self.clean_preview(workspace)
+            prepared = run(
+                REMOTE, "prepare-change", str(workspace), "--manifest", str(manifest),
+                "--object-ref", "DOCUMENTO_01", "--operation", "rename",
+                "--target-ref", "NUOVO_NOME_SPEC", "--preview", preview.name,
+            )
+            self.assertEqual(prepared.returncode, 0, prepared.stderr)
+            change_id = self.change_id(prepared.stdout)
+            record_path = workspace / "remote-dossiers" / "changes" / f"{change_id}.json"
+            record = json.loads(record_path.read_text(encoding="utf-8"))
+            record["provider"] = "sharepoint"
+            record_path.write_text(json.dumps(record), encoding="utf-8")
+            note = root / "note.md"
+            note.write_text("Provider e modifica verificati prima del gate.", encoding="utf-8")
+            denied = run(
+                REMOTE, "approve-change", str(workspace), "--change-id", change_id,
+                "--note-file", str(note), "--confirmation", "AUTORIZZO MODIFICA SORGENTI",
+            )
+            self.assertNotEqual(denied.returncode, 0)
+
+            blocked = run(
+                REMOTE, "verify-change", str(workspace), "--change-id", change_id,
+                "--manifest", str(manifest),
+            )
+            self.assertEqual(blocked.returncode, 2)
 
     def test_delete_requires_additional_irreversible_confirmation(self):
         with tempfile.TemporaryDirectory() as temp:

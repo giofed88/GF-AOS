@@ -1,5 +1,5 @@
 {
-  "description": "GF-AOS SessionStart read-only: riprende solo il workspace indicato esplicitamente.",
+  "description": "GF-AOS lifecycle privacy-first: checkpoint canonico, contesto minimo e nessuna acquisizione del transcript.",
   "hooks": {
     "SessionStart": [
       {
@@ -12,6 +12,71 @@
             "timeout": 15,
             "additionalContextLimit": 3000,
             "statusMessage": "Ripresa checkpoint GF-AOS"
+          }
+        ]
+      }
+    ],
+    "PreCompact": [
+      {
+        "matcher": "manual|auto",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$PLUGIN_ROOT/scripts/runtime_hooks.py\"",
+            "commandWindows": "py -3 \"%PLUGIN_ROOT%\\scripts\\runtime_hooks.py\"",
+            "timeout": 10,
+            "statusMessage": "Verifica checkpoint GF-AOS"
+          }
+        ]
+      }
+    ],
+    "PostCompact": [
+      {
+        "matcher": "manual|auto",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$PLUGIN_ROOT/scripts/runtime_hooks.py\"",
+            "commandWindows": "py -3 \"%PLUGIN_ROOT%\\scripts\\runtime_hooks.py\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "SubagentStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$PLUGIN_ROOT/scripts/runtime_hooks.py\"",
+            "commandWindows": "py -3 \"%PLUGIN_ROOT%\\scripts\\runtime_hooks.py\"",
+            "timeout": 10,
+            "additionalContextLimit": 600,
+            "statusMessage": "Applica contesto minimo GF-AOS"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$PLUGIN_ROOT/scripts/runtime_hooks.py\"",
+            "commandWindows": "py -3 \"%PLUGIN_ROOT%\\scripts\\runtime_hooks.py\"",
+            "timeout": 10
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$PLUGIN_ROOT/scripts/runtime_hooks.py\"",
+            "commandWindows": "py -3 \"%PLUGIN_ROOT%\\scripts\\runtime_hooks.py\"",
+            "timeout": 3
           }
         ]
       }
