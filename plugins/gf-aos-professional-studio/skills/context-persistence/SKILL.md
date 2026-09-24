@@ -9,3 +9,7 @@ Salva checkpoint nel workspace del cliente: ID incarico, periodo, ultimo aggiorn
 
 Usa `strategic-context` per comprimere conversazioni lunghe nel checkpoint Markdown canonico.
 Non conservare trascrizioni, ragionamento interno o dati provenienti da altri clienti.
+
+Gli hook `PreCompact` verificano la presenza della memoria canonica senza leggere il transcript;
+`SessionStart` ripristina soltanto il bootstrap minimizzato. Gli hook modificati devono essere
+riesaminati e considerati attendibili dall'utente nel runtime Codex prima dell'esecuzione.

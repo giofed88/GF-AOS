@@ -111,7 +111,7 @@ class ContextCuratorTest(unittest.TestCase):
 
     def test_packaging_and_agent_registration(self):
         manifest = json.loads((PLUGIN / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8"))
-        self.assertEqual(manifest["version"], "0.15.0")
+        self.assertEqual(manifest["version"], "0.16.0")
         for relative in (
             "skills/context-curation/SKILL.md",
             "skills/context-curation/references/curation-contract.md",

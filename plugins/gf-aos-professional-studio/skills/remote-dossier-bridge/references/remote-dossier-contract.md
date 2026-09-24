@@ -4,12 +4,12 @@
 
 Il manifest JSON deve contenere soltanto:
 
-- `provider` uguale a `google-drive`;
+- `provider` uguale a `google-drive`, `onedrive` o `sharepoint`;
 - `source_ref`, `object_ref` e `parent_ref` come alias non identificativi;
 - tipo, MIME type, dimensione e date tecniche;
 - hash della revisione e, quando disponibile, hash del contenuto.
 
-Non includere nomi di file, percorsi leggibili, URL, ID Drive reali, proprietari, email, contenuti
+Non includere nomi di file, percorsi leggibili, URL, ID provider reali, proprietari, email, contenuti
 o credenziali. Il connettore autorizzato conserva all'esterno la risoluzione tra alias e oggetti.
 
 ## Stati e confini
@@ -29,7 +29,7 @@ o credenziali. Il connettore autorizzato conserva all'esterno la risoluzione tra
 
 ## Regole
 
-- Trattare la struttura Drive come segnale tassonomico, non come prova del contenuto.
+- Trattare la struttura Drive, OneDrive o SharePoint come segnale tassonomico, non come prova del contenuto.
 - Bloccare lettura e modifica quando il manifest differisce dalla baseline.
 - Importare solo in `remote-imports/inbox`; non sovrascrivere output o sorgenti.
 - Mantenere la richiesta di lettura `read_only: true` e `execution_claimed: false`.
@@ -39,7 +39,7 @@ o credenziali. Il connettore autorizzato conserva all'esterno la risoluzione tra
 - Vincolare la modifica a baseline, revisione, anteprima e report privacy mediante hash.
 - Inserire nella richiesta un `target_ref` strutturato e pseudonimizzato; per `move` deve essere
   una cartella diversa gia presente nella baseline. Il connettore risolve gli alias reali.
-- Non interpretare `APPROVO OUTPUT` come autorizzazione a modificare Drive.
+- Non interpretare `APPROVO OUTPUT` come autorizzazione a modificare il provider remoto.
 - Richiedere sempre `AUTORIZZO MODIFICA SORGENTI` dopo la visione dell'anteprima.
 - Per `replace` e `delete` richiedere il gate irreversibile legato al Change ID.
 - Non registrare il testo dell'anteprima, delle note o dei documenti nell'outbox.

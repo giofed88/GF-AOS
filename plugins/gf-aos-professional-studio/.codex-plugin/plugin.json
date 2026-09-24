@@ -1,7 +1,7 @@
 {
   "name": "gf-aos-professional-studio",
-  "version": "0.15.0",
-  "description": "Workflow GF-AOS con dashboard, scadenze e fascicoli governati in privacy rafforzata.",
+  "version": "0.16.0",
+  "description": "Workflow GF-AOS con ECC Runtime, documenti professionali coerenti e lifecycle privacy-first.",
   "repository": "https://github.com/giofed88/GF-AOS",
   "author": {
     "name": "Giovanni Federico"
@@ -11,7 +11,7 @@
   "interface": {
     "displayName": "GF-AOS Professional Studio",
     "shortDescription": "Fascicoli e flussi di lavoro dello studio.",
-    "longDescription": "Coordina skill e ruoli agentici e aggrega fascicoli, task, scadenze e code in un cruscotto pseudonimizzato con hash e gate, senza invii automatici.",
+    "longDescription": "Coordina skill e ruoli agentici con eval automatici, checkpoint verificati e hook lifecycle senza acquisire transcript; aggrega fascicoli, task, scadenze e code con privacy, hash e gate, mantenendo governate le azioni esterne.",
     "developerName": "Giovanni Federico",
     "category": "Productivity",
     "capabilities": ["Read", "Write"],

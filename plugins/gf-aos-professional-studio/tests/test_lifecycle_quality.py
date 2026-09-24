@@ -233,7 +233,10 @@ class LifecycleQualityTest(unittest.TestCase):
         self.assertEqual(manifest["hooks"], "./hooks/codex-hooks.json")
         hooks = json.loads((PLUGIN / "hooks" / "codex-hooks.json").read_text(encoding="utf-8"))
         self.assertIn("SessionStart", hooks["hooks"])
-        self.assertEqual(set(hooks["hooks"]), {"SessionStart"})
+        self.assertEqual(
+            set(hooks["hooks"]),
+            {"SessionStart", "PreCompact", "PostCompact", "SubagentStart", "Stop", "SessionEnd"},
+        )
         handler = hooks["hooks"]["SessionStart"][0]["hooks"][0]
         self.assertIn("commandWindows", handler)
         self.assertEqual(handler["additionalContextLimit"], 3000)

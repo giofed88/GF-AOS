@@ -1,6 +1,6 @@
 ---
 name: remote-dossier-bridge
-description: Registra e verifica snapshot pseudonimizzati di fascicoli Google Drive, prepara importazioni in sola lettura e governa proposte di modifica remota senza eseguirle. Usa quando GF-AOS deve collegare un fascicolo remoto, rilevare variazioni, richiedere documenti a un connettore autorizzato o predisporre rename, move, metadati, sostituzioni ed eliminazioni con gate separati.
+description: Registra e verifica snapshot pseudonimizzati di fascicoli Google Drive, OneDrive e SharePoint, prepara importazioni in sola lettura e governa proposte di modifica remota senza eseguirle. Usa quando GF-AOS deve collegare un fascicolo remoto, rilevare variazioni, richiedere documenti a un connettore autorizzato o predisporre rename, move, metadati, sostituzioni ed eliminazioni con gate separati.
 ---
 
 # Remote dossier bridge
@@ -21,6 +21,6 @@ Leggere `references/remote-dossier-contract.md` e, dalla radice del plugin, usar
    `AUTORIZZO OPERAZIONE IRREVERSIBILE <CHANGE_ID>`.
 9. Verificare nuovamente baseline, revisione, anteprima, privacy e richiesta prima dell'esecuzione.
 
-Il plugin non chiama Google Drive. `READY_FOR_AUTHORIZED_CONNECTOR` e
+Il plugin non chiama direttamente Google Drive, OneDrive o SharePoint. `READY_FOR_AUTHORIZED_CONNECTOR` e
 `READY_FOR_EXTERNAL_EXECUTOR` indicano soltanto che una richiesta locale e coerente; non provano
 lettura, modifica, sincronizzazione o consegna.
