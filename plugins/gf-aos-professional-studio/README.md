@@ -1,4 +1,4 @@
-# GF-AOS Professional Studio v0.14.0
+# GF-AOS Professional Studio v0.15.0 — bozza locale
 
 Plugin Codex per instradamento professionale, orchestrazione agentica, pianificazione, inventario e Document Intelligence locale, scadenze governate, brief e verifica. **Nessun server MCP, connettore Drive live, automazione Telegram o scheduler live è attivo in questo pacchetto**. Le integrazioni richiedono configurazione separata.
 

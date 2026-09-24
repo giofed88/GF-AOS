@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.15.0 — bozza locale
+- Selezione governata dei format privati OneDrive per incarico, ruolo e specializzazione.
+- Scheda comparativa Markdown generata in workspace senza copie di lettere o dati cliente nel repository.
+- Verifica obbligatoria di versioni, incongruenze, clausole variabili e aggiornamento normativo.
+- Nessun accesso OneDrive incorporato nel plugin; connettore esterno in sola lettura.
+
 ## 0.14.0
 - Governed Studio Dashboard Markdown-first per la vista multi-fascicolo.
 - Manifest workspace effimero con percorsi esclusi dagli artefatti derivati.
