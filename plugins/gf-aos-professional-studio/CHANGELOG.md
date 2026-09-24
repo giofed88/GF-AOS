@@ -1,5 +1,16 @@
 # Changelog
 
+## 0.14.0
+- Governed Studio Dashboard Markdown-first per la vista multi-fascicolo.
+- Manifest workspace effimero con percorsi esclusi dagli artefatti derivati.
+- Alias obbligatori `STUDIO_*`, `CASE_*`, `TASK_*` e `OWNER_*`.
+- Aggregazione read-only di stato, qualita, blocker, azioni, scadenze e code.
+- Testi cliente, target, payload, fonti e percorsi sostituiti da conteggi e impronte.
+- Registro to-do governato con priorita, data, stati e transizioni confermate.
+- Dashboard stale dopo ogni modifica task e rigenerazione con gate dedicato.
+- Verifica live di Markdown, snapshot, manifest e sorgenti governate.
+- Nuovo Studio Dashboard Controller read-only e due eval dedicati.
+
 ## 0.13.0
 - Governed Deadline and Reminder Engine senza calendario fiscale hard-coded.
 - Nota-fonte obbligatoria con fonte, regola, applicabilita e data verificata.

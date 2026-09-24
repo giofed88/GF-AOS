@@ -307,9 +307,9 @@ class DeadlinesTest(unittest.TestCase):
             self.assertEqual(status.returncode, 0, status.stderr)
             self.assertIn("BLOCKED_LIVE", status.stdout)
 
-    def test_v013_packaging_contains_deadline_contract_agent_and_evals(self):
+    def test_v014_packaging_contains_deadline_contract_agent_and_evals(self):
         manifest = json.loads((PLUGIN / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8"))
-        self.assertEqual(manifest["version"], "0.13.0")
+        self.assertEqual(manifest["version"], "0.14.0")
         required = [
             ROOT / ".codex" / "agents" / "deadline-controller.toml",
             PLUGIN / "scripts" / "deadlines.py",

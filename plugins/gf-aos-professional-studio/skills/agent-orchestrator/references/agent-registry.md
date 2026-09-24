@@ -14,6 +14,7 @@
 | External Action Controller | gate e integrita di richieste email, PEC, notifiche, condivisioni e pubblicazioni | risolvere destinatari, inviare o dichiarare consegna |
 | Remote Dossier Controller | baseline, drift, revisioni e gate dei fascicoli remoti | risolvere ID Drive, chiamare provider o dichiarare sincronizzazione |
 | Deadline Controller | fonti, applicabilita, timezone, gate e reminder | inventare termini, creare eventi live o dichiarare depositi |
+| Studio Dashboard Controller | minimizzazione, integrita, conteggi e task multi-fascicolo | aprire contenuti cliente, modificare sorgenti o eseguire azioni |
 | Dossier Builder | struttura e tracciabilita degli output | approvazione o firma |
 | Final Verifier | controllo conclusivo indipendente | autorizzare invii o modifiche |
 
