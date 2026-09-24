@@ -56,6 +56,11 @@ e verifica di applicabilita. La validazione professionale della scadenza non aut
 o notifiche: genera soltanto bozze pseudonimizzate e passale a `external-action-governance`.
 Non segnare automaticamente completata una scadenza scaduta.
 
+Per la vista trasversale usa `studio-dashboard`. Il manifest dei workspace e effimero: nel
+cruscotto conserva soltanto alias `CASE_*`, stati, conteggi e impronte. Non trasferire nomi
+cliente, percorsi, testi di blocker o prossime azioni. Una modifica alle sorgenti o ai task rende
+il dashboard stale e richiede una nuova generazione e verifica.
+
 Apprendi solo con `governed-learning` da fascicoli approvati e da una lezione deliberatamente
 sanificata. Non osservare automaticamente transcript o tool call. Un candidato metodo non entra
 nella libreria e non modifica skill o agenti senza il gate umano previsto.

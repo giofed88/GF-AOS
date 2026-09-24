@@ -1,4 +1,4 @@
-# GF-AOS Professional Studio v0.13.0
+# GF-AOS Professional Studio v0.14.0
 
 Plugin Codex per instradamento professionale, orchestrazione agentica, pianificazione, inventario e Document Intelligence locale, scadenze governate, brief e verifica. **Nessun server MCP, connettore Drive live, automazione Telegram o scheduler live è attivo in questo pacchetto**. Le integrazioni richiedono configurazione separata.
 
@@ -10,8 +10,8 @@ del contesto. La repository include la configurazione CLI in `.codex/config.toml
 in `.codex/agents/`. I modelli non sono fissati: viene ereditato quello selezionato in Codex.
 
 Le skill `agent-orchestrator` e `strategic-context` mantengono lo stesso metodo anche negli
-ambienti che non caricano automaticamente i profili repository-local. I quattordici profili
-includono anche Privacy Guardian, External Action Controller, Remote Dossier Controller e Deadline Controller. Gli agenti restituiscono
+ambienti che non caricano automaticamente i profili repository-local. I quindici profili
+includono anche Privacy Guardian, External Action Controller, Remote Dossier Controller, Deadline Controller e Studio Dashboard Controller. Gli agenti restituiscono
 handoff Markdown; il coordinatore conserva il controllo delle scritture e l'utente mantiene
 l'approvazione professionale.
 
@@ -199,6 +199,27 @@ pseudonimizzati e resta `BOZZA PROMEMORIA`: ogni payload deve poi attraversare P
 il gate delle azioni esterne. Nessun evento di calendario, messaggio Telegram o adempimento
 viene eseguito o dichiarato automaticamente.
 
+## Governed Studio Dashboard
+
+La v0.14 crea un cruscotto Markdown unico per fascicoli, task, scadenze e code. Il manifest dei
+workspace resta esterno ed effimero: `STUDIO_DASHBOARD.md` e `STUDIO_SNAPSHOT.json` conservano
+soltanto alias, stati, conteggi e impronte, senza nomi cliente, percorsi o testi dei fascicoli.
+
+```bash
+python3 plugins/gf-aos-professional-studio/scripts/studio_dashboard.py init /path/studio-dashboard \
+  --studio-ref STUDIO_GF_AOS
+
+python3 plugins/gf-aos-professional-studio/scripts/studio_dashboard.py build /path/studio-dashboard \
+  --manifest /path/workspace-manifest.json --as-of 2026-09-24 --horizon-days 30
+
+python3 plugins/gf-aos-professional-studio/scripts/studio_dashboard.py verify /path/studio-dashboard \
+  --manifest /path/workspace-manifest.json
+```
+
+I task usano codici pseudonimizzati e non contengono descrizioni libere. Ogni modifica rende il
+cruscotto stale; la rigenerazione richiede `RIGENERO DASHBOARD`. Il report non apre connettori,
+non completa scadenze e non esegue richieste esterne.
+
 ## Installazione da marketplace repository
 
 Dopo aver caricato il contenuto di questo pacchetto nella repository `giofed88/GF-AOS`, dalla CLI Codex: `codex plugin marketplace add giofed88/GF-AOS --ref main`; quindi aprire il catalogo plugin e installare `gf-aos-professional-studio`. La repository privata deve essere accessibile all'account GitHub usato da Codex. Il solo ZIP locale non rende disponibile il marketplace GitHub.
@@ -241,6 +262,6 @@ Dipendenze di estrazione: `pypdf`, `python-docx`, `openpyxl` e `python-pptx`. Il
 | Drive e fascicoli remoti | Ponte governato incluso; connettore live da configurare e verificare |
 | Scadenze programmate | Motore governato e coda reminder inclusi; scheduler live da collegare |
 | Telegram/TaskNotify | Outbox pronta; connettore da collegare e verificare |
-| Dashboard GF-AOS | Da integrare |
+| Dashboard GF-AOS | Cruscotto Markdown multi-fascicolo e task governati incluso |
 
 Il codice sorgente di questa versione è conservato nella repository indicata. L'installazione e le integrazioni esterne restano passaggi separati.

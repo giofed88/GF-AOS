@@ -54,6 +54,10 @@ config_file = "agents/remote-dossier-controller.toml"
 description = "Riesamina fonti, applicabilita, timezone, gate e promemoria senza inventare termini o inviare notifiche."
 config_file = "agents/deadline-controller.toml"
 
+[agents.studio_dashboard_controller]
+description = "Riesamina minimizzazione, integrita, conteggi e task del cruscotto multi-fascicolo."
+config_file = "agents/studio-dashboard-controller.toml"
+
 [agents.dossier_builder]
 description = "Progetta il dossier professionale e collega conclusioni, carte di lavoro ed evidenze senza dichiararlo approvato."
 config_file = "agents/dossier-builder.toml"

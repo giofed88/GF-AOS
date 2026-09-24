@@ -26,7 +26,7 @@ class RemoteDossiersTest(unittest.TestCase):
         manifest = json.loads(
             (PLUGIN / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8")
         )
-        self.assertEqual(manifest["version"], "0.13.0")
+        self.assertEqual(manifest["version"], "0.14.0")
         for relative in (
             "scripts/remote_dossiers.py",
             "skills/remote-dossier-bridge/SKILL.md",

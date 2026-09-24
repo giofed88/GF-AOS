@@ -267,7 +267,7 @@ class ExternalActionsTest(unittest.TestCase):
 
     def test_packaging(self):
         manifest = json.loads((PLUGIN / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8"))
-        self.assertEqual(manifest["version"], "0.13.0")
+        self.assertEqual(manifest["version"], "0.14.0")
         for relative in (
             "skills/external-action-governance/SKILL.md",
             "skills/external-action-governance/references/external-action-contract.md",
