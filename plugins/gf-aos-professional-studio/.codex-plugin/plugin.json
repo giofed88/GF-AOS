@@ -1,7 +1,7 @@
 {
   "name": "gf-aos-professional-studio",
-  "version": "0.16.0",
-  "description": "Workflow GF-AOS con ECC Runtime, documenti professionali coerenti e lifecycle privacy-first.",
+  "version": "0.17.0",
+  "description": "Workflow GF-AOS eseguibili per revisione e governance, con ECC Runtime e documenti professionali coerenti.",
   "repository": "https://github.com/giofed88/GF-AOS",
   "author": {
     "name": "Giovanni Federico"

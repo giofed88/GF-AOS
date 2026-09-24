@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.17.0
+- Runtime persistente A01-A11 per revisione legale, collegio sindacale e ruolo combinato.
+- Stato unico in `CASE_STATE.json` con evidenze, limiti, follow-up, decisioni e artefatti.
+- Avanzamento sequenziale e salto consapevole con motivazione e conferma esatta.
+- Dossier Markdown integrato con verbale narrativo e carta di lavoro indipendente.
+- Separazione obbligatoria `REVISIONE`, `VIGILANZA` e `COMUNE` per `DUAL_001`.
+- QA strutturale, controllo hash e ricevuta di approvazione senza firma o trasmissione implicita.
+- Due eval dedicati e regressione su audit, board e dual.
+
 ## 0.16.0
 - Design system documentale GF-AOS basato sull'intestazione approvata con monogramma GF.
 - Blocco identitario ad alta risoluzione stabile tra Word e PDF, con metadati editabili.

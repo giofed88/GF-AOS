@@ -1,4 +1,4 @@
-# GF-AOS Professional Studio v0.16.0
+# GF-AOS Professional Studio v0.17.0
 
 Plugin Codex per instradamento professionale, orchestrazione agentica, pianificazione, inventario e Document Intelligence locale, scadenze governate, brief e verifica. **Nessun server MCP, connettore Drive live, automazione Telegram o scheduler live è attivo in questo pacchetto**. Le integrazioni richiedono configurazione separata.
 
@@ -86,6 +86,22 @@ python3 plugins/gf-aos-professional-studio/scripts/workflow_packs.py validate /p
 `plan` usa il `lead_module` di `CASE_STATE.json`, crea piano, registro output e indice carte di
 lavoro e rifiuta di sovrascrivere file esistenti. `validate` applica l'eval specifico del modulo.
 I pack non includono `CRISIS_001` o `ODV_001` e non li attivano per analogia.
+
+### Runtime revisione e governance
+
+La v0.17 rende eseguibili i workflow `AUDIT_001`, `BOARD_001` e `DUAL_001`: registra nel medesimo
+`CASE_STATE.json` avanzamento A01-A11, evidenze, limiti, follow-up, decisioni e artefatti. Genera
+un dossier Markdown integrato con verbale e carta di lavoro e, per il ruolo combinato, mantiene
+distinte le procedure `REVISIONE`, `VIGILANZA` e `COMUNE`.
+
+```bash
+python3 plugins/gf-aos-professional-studio/scripts/audit_workflow.py init /path/workspace
+python3 plugins/gf-aos-professional-studio/scripts/audit_workflow.py draft /path/workspace
+python3 plugins/gf-aos-professional-studio/scripts/audit_workflow.py validate /path/workspace
+```
+
+Il gate finale verifica l'hash dell'esatta versione e non autorizza firma, invio, deposito o
+modifica delle fonti.
 
 ## Context Curation & Confidentiality Guard
 

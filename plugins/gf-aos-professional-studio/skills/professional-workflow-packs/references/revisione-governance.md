@@ -17,3 +17,18 @@ Non formulare automaticamente giudizi su continuita, indipendenza, conformita o 
 Verificare il documento vigente sottostante nelle fonti RGS/MEF e CNDCEC, non la sola landing page.
 Prima di A09, A01–A08 devono essere terminali. A11 richiede controllo dell'esatta versione,
 nota professionale e `APPROVO OUTPUT`.
+
+## Runtime persistente
+
+Usare `scripts/audit_workflow.py` per l'esecuzione e non limitarsi a marcare il piano statico.
+Il runtime conserva fasi, severita, evidenze, limiti, decisioni, follow-up, artefatti e approvazione
+nel `CASE_STATE.json` canonico. Non creare uno stato parallelo.
+
+- `step`: registra una fase A01-A08, rifiutando avanzamenti fuori sequenza.
+- `skip`: richiede motivazione di almeno 15 caratteri e conferma esatta della fase.
+- `draft`: produce `DOSSIER_INTEGRATO.md` con verbale e carta di lavoro indipendenti.
+- `validate`: produce `AUDIT_QUALITY_REVIEW.md` e blocca A11 in presenza di errori.
+- `approve`: verifica l'hash del dossier e produce `AUDIT_APPROVAL_RECEIPT.md`.
+
+Il locator puo identificare una fonte del workspace, ma il repository e gli event log non devono
+contenere nomi cliente, percorsi assoluti o contenuto documentale.
