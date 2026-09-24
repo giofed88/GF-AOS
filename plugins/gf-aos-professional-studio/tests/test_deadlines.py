@@ -309,7 +309,7 @@ class DeadlinesTest(unittest.TestCase):
 
     def test_v014_packaging_contains_deadline_contract_agent_and_evals(self):
         manifest = json.loads((PLUGIN / ".codex-plugin" / "plugin.json").read_text(encoding="utf-8"))
-        self.assertEqual(manifest["version"], "0.14.0")
+        self.assertEqual(manifest["version"], "0.15.0")
         required = [
             ROOT / ".codex" / "agents" / "deadline-controller.toml",
             PLUGIN / "scripts" / "deadlines.py",
